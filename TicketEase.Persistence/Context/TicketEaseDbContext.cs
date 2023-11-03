@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TicketEase.Persistence.Context
 {
-    internal class TicketEaseContext
+    internal class TicketEaseDbContext
     {
     }
 }
