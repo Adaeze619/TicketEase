@@ -1,4 +1,4 @@
-using TicketEase.Persistence.Extension;
+using TicketEase.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
