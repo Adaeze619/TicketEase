@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using TicketEase.Domain.Entities;
+
 
 namespace TicketEase.Common.Utilities
 {
@@ -20,17 +25,20 @@ namespace TicketEase.Common.Utilities
             var roles = new List<IdentityRole>
         {
             new IdentityRole
-            {
+            {   Id = Guid.NewGuid().ToString(),
                 Name = "Manager",
                 NormalizedName = "Manager"
             },
             new IdentityRole
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = "SuperAdmin",
                 NormalizedName = "SuperAdmin"
             },
             new IdentityRole
             {
+
+                Id = Guid.NewGuid().ToString(),
                 Name = "User",
                 NormalizedName = "User"
             }

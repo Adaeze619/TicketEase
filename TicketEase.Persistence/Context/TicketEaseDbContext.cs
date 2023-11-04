@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketEase.Common.Utilities;
+using TicketEase.Domain.Entities;
 
 namespace TicketEase.Persistence.Context
 {
-    public class TicketEaseDbContext: IdentityDbContext
+    public class TicketEaseDbContext : IdentityDbContext<TUser>
     {
 
         public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options) 
@@ -24,6 +25,6 @@ namespace TicketEase.Persistence.Context
         }
     }
 
-    
+   
 }
  

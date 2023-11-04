@@ -308,6 +308,19 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "TicketEase.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.Extensions.Identity.Stores": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TicketEase.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TicketEase.Domain.dll": {}
+        }
       }
     }
   },
@@ -709,12 +722,18 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "TicketEase.Domain/1.0.0": {
+      "type": "project",
+      "path": "../TicketEase.Domain/TicketEase.Domain.csproj",
+      "msbuildProject": "../TicketEase.Domain/TicketEase.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.EntityFrameworkCore >= 6.0.0",
-      "Microsoft.Extensions.Identity.Stores >= 6.0.0"
+      "Microsoft.Extensions.Identity.Stores >= 6.0.0",
+      "TicketEase.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -749,7 +768,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\user\\source\\repos\\SQ017-TicketEase-Live-Project-Backend\\TicketEase.Domain\\TicketEase.Domain.csproj": {
+              "projectPath": "C:\\Users\\user\\source\\repos\\SQ017-TicketEase-Live-Project-Backend\\TicketEase.Domain\\TicketEase.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

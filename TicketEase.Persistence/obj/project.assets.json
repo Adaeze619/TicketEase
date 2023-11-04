@@ -364,13 +364,27 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "6.0.0",
-          "Microsoft.Extensions.Identity.Stores": "6.0.0"
+          "Microsoft.Extensions.Identity.Stores": "6.0.0",
+          "TicketEase.Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/TicketEase.Common.dll": {}
         },
         "runtime": {
           "bin/placeholder/TicketEase.Common.dll": {}
+        }
+      },
+      "TicketEase.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.Extensions.Identity.Stores": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TicketEase.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TicketEase.Domain.dll": {}
         }
       }
     }
@@ -826,6 +840,11 @@
       "type": "project",
       "path": "../TicketEase.Common/TicketEase.Common.csproj",
       "msbuildProject": "../TicketEase.Common/TicketEase.Common.csproj"
+    },
+    "TicketEase.Domain/1.0.0": {
+      "type": "project",
+      "path": "../TicketEase.Domain/TicketEase.Domain.csproj",
+      "msbuildProject": "../TicketEase.Domain/TicketEase.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {

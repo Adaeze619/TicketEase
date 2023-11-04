@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TicketEase.Domain\TicketEase.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
