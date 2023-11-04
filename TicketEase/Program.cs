@@ -7,12 +7,10 @@ var configuration = builder.Configuration;
 // Add services to the container.
 
 // Authentication configuration
-
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
 
 // Identity  configuration
-
 builder.Services.IdentityConfiguration();
 
 

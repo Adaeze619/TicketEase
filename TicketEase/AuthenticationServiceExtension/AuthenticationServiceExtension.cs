@@ -20,9 +20,7 @@ namespace TicketEase.Persistence.Extensions
                         .UTF8.GetBytes(configuration["JwtSettings : SecretKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
-
                 serviceCollection.AddSingleton(TokenParameters);
-
                 serviceCollection.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

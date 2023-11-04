@@ -14,9 +14,7 @@ namespace TicketEase.Configurations
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
-                options.Password.RequiredLength = 6;
-                
-
+                options.Password.RequiredLength = 6;            
             });
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
             builder.AddEntityFrameworkStores <TicketEaseDbContext>()
