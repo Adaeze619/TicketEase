@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TicketEase.Domain\TicketEase.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
