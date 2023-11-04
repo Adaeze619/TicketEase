@@ -1,6 +1,9 @@
+using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
 using TicketEase.Domain.Entities;
+using TicketEase.Persistence.Context;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<DataContext>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
-
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

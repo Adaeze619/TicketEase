@@ -1,5 +1,9 @@
-﻿using MailKit.Net.Smtp;
+﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using TicketEase.Application.Interfaces.Services;
@@ -14,6 +18,10 @@ namespace TicketEase.Application.ServicesImplementation
         {
             this.emailSettings = options.Value;
         }
+
+
+
+
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
             var email = new MimeMessage();
@@ -76,5 +84,7 @@ namespace TicketEase.Application.ServicesImplementation
                 smtp.Dispose();
             }
         }
+
+
     }
 }

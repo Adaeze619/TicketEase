@@ -15,10 +15,11 @@ namespace TicketEase.Persistence.Context
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
-                .UseSqlServer("Server=INNOCHU;Database=userdb;Trusted_Connection=true;TrustServerCertificate = true");
+                .UseSqlServer("Server=INNOCHU;Database=ticket;Trusted_Connection=true;TrustServerCertificate = true");
         }
 
-        public DbSet<User> Users => Set<User>();
+        public DbSet<User> Users { get; set; }             // => Set<User>();
+      
 
     }
 }

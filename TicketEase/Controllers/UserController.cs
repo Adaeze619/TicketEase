@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Domain.Entities;
 using TicketEase.Persistence.Context;
+using TicketEase.Persistence.Repositories;
 
 namespace TicketEase.Controllers
 {
@@ -23,12 +25,14 @@ namespace TicketEase.Controllers
         private readonly DataContext _context;
         private readonly ILogger<UserController> _logger;
         private readonly IEmailService _emailService;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(DataContext context, ILogger<UserController> logger, IEmailService emailService)
+        public UserController(DataContext context, ILogger<UserController> logger, IEmailService emailService, IUserRepository userRepository)
         {
             _context = context;
             _logger = logger;
             _emailService = emailService;
+            _userRepository = userRepository;
         }
 
 
@@ -231,5 +235,39 @@ namespace TicketEase.Controllers
         {
             return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
         }
+
+
+
+        [HttpPatch("image/{contactId}")]
+        public async Task<ActionResult> UpdateImage(string Id, IFormFile image)
+        {
+            if (image == null)
+            {
+                return BadRequest("Image file is required");
+            }
+            if (image.Length <= 0)
+            {
+                return BadRequest("Image file is empty");
+            }
+
+            var response = await _userRepository.UploadContactImage(Id, image);
+
+            if (response == "success")
+            {
+                return Ok("User image updated successfully");
+            }
+            else if (response == "User not found")
+            {
+                return NotFound("User not found");
+            }
+            else
+            {
+                return StatusCode(500, response);
+            }
+        }
+
+
+
+
     }
 }
