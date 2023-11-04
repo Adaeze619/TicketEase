@@ -5,8 +5,8 @@ namespace TicketEase.Domain.Entities
     public class Manager
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         [ForeignKey("UserId")]
+        public Guid UserId { get; set; }      
         public User Users { get; set; }
         public string CompanyName { get; set; }
         public string BusinessEmail { get; set; }

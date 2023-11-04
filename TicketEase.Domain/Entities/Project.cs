@@ -10,8 +10,8 @@ namespace TicketEase.Domain.Entities
         public string DepartmentName { get; set; }
         public Status Status { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
-        public string BoardId { get; set; }
         [ForeignKey("BoardId")]
+        public Guid BoardId { get; set; }
         public Board Board { get; set; }
     }
 }
