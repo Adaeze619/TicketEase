@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TicketEase.Domain.Entities
 {
-    public class TUser : IdentityUser
+    public class Users : IdentityUser
     { 
     }
 }
