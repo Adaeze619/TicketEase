@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m8fH6uFDX7H0vungmUEfgqp8klbskCNU8VfbtYj5almgzPOxGTVTtWr5YRhpZeaT15LZhUuR64dV6w6eHedbFw==",
+  "dgSpecHash": "Ji8jYJWXHr6fJDHgPN+MkFQCpvnObHc2uFPiDYl4E9aZY4OHj8VCP/EwS+LiCnP+O2WXE2D4pAZgJtaGyPRSoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Decagon\\source\\repos\\TicketEase\\TicketEase.Domain\\TicketEase.Domain.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\SQ017-TicketEase-Live-Project-Backend\\TicketEase.Domain\\TicketEase.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
