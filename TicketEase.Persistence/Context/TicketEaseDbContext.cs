@@ -10,7 +10,7 @@ using TicketEase.Domain.Entities;
 
 namespace TicketEase.Persistence.Context
 {
-    public class TicketEaseDbContext : IdentityDbContext<Users>
+    public class TicketEaseDbContext : IdentityDbContext<User>
     {
 
         public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options) 
