@@ -1,10 +1,9 @@
-﻿using Email2.Emailfolder;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using MimeKit.Text;
-
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Domain.Entities;
 
 namespace TicketEase.Application.ServicesImplementation
 {

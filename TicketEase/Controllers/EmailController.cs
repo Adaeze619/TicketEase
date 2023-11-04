@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Domain.Entities;
 
 namespace TicketEase.Controllers
 {

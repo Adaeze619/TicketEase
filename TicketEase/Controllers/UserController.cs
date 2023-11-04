@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Domain.Entities;
+using TicketEase.Persistence.Context;
 
 namespace TicketEase.Controllers
 {
