@@ -431,6 +431,20 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
+      },
+      "TicketEase.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Serilog.AspNetCore": "7.0.0",
+          "Serilog.Settings.Configuration": "7.0.1"
+        },
+        "compile": {
+          "bin/placeholder/TicketEase.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TicketEase.Application.dll": {}
+        }
       }
     }
   },
@@ -1115,12 +1129,18 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "TicketEase.Application/1.0.0": {
+      "type": "project",
+      "path": "../TicketEase.Application/TicketEase.Application.csproj",
+      "msbuildProject": "../TicketEase.Application/TicketEase.Application.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Serilog.AspNetCore >= 7.0.0",
-      "Serilog.Settings.Configuration >= 7.0.1"
+      "Serilog.Settings.Configuration >= 7.0.1",
+      "TicketEase.Application >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1159,7 +1179,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Decagon\\source\\repos\\TicketEase\\TicketEase.Application\\TicketEase.Application.csproj": {
+              "projectPath": "C:\\Users\\Decagon\\source\\repos\\TicketEase\\TicketEase.Application\\TicketEase.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -1200,5 +1224,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Decagon\\source\\repos\\TicketEase\\TicketEase.Common\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
