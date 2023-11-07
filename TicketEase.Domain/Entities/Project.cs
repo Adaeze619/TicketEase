@@ -1,17 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TicketEase.Domain.Enums;
 
 namespace TicketEase.Domain.Entities
 {
     public class Project : BaseEntity
     {
+        [StringLength(50)]
         public string Title { get; set; }
+
+        [StringLength(125)]
         public string Description { get; set; }
-        public string DepartmentName { get; set; }
-        public Status Status { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
+        
         [ForeignKey("BoardId")]
-        public Guid BoardId { get; set; }
-        public Board Board { get; set; }
+        public string BoardId { get; set; }
+        //public virtual Board Board { get; set; }
     }
 }

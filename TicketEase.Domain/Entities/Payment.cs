@@ -8,6 +8,5 @@ namespace TicketEase.Domain.Entities
         public decimal Amount { get; set; }
         public string Description { get; set; }
         public Status Status {  get; set; }
-
     }
 }

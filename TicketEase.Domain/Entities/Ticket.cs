@@ -12,17 +12,13 @@ namespace TicketEase.Domain.Entities
         public Priority Priority { get; set; }
         public DateTime ResolvedAt { get; set; }
         public string AssignedTo { get; set; }
-        public string CreatedBy { get; set; }
-        public string UpdatedBy { get; set; }
-        [ForeignKey("UserId")]
-        public Guid UserId { get; set; }        
-        public User Users { get; set; }
-        [ForeignKey("ProjectId")]
-        public Guid ProjectId { get; set; }     
-        public Project Project { get; set; }
-        [ForeignKey("CommentId")]
-        public Guid CommentId { get; set; }        
-        public Comment Comment { get; set; }
+       
+        [ForeignKey("AppUserId")]
+        public string AppUserId { get; set; }
 
+        [ForeignKey("ProjectId")]
+        public string ProjectId { get; set; }             
+        //public Project Project { get; set; }
+        public ICollection<Comment> Comment { get; set; }
     }
 }

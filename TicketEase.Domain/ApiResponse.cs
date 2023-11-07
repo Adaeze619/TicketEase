@@ -1,49 +1,47 @@
 ﻿namespace TicketEase.Domain
 {
-    public class ApiResponse
+    public class ApiResponse<T> 
     {
         public bool Succeeded { get; set; }
         public string Message { get; set; }
         public List<string> Errors { get; set; }
-        public object Data { get; set; }
-
-        public ApiResponse(string message = null)
-        {
-            Succeeded = true;
-            Message = message;
-        }
-
-        public static ApiResponse Success(object data)
-        {
-            return new ApiResponse { Message = "Success", Data = data };
-        }
-
-        public static ApiResponse Failed(object data, string message = "Failure", List<string> errors = null)
-        {
-            return new ApiResponse { Succeeded = false, Data = data, Message = message, Errors = errors };
-        }
-    }
-
-    public class ApiResponse<T> : ApiResponse
-    {
         public T Data { get; set; }
-        public ApiResponse() { }
-
-        public static ApiResponse<T> Success(T data, string message)
-        {
-            return new ApiResponse<T> { Succeeded = true, Data = data, Message = message };
+        public int StatusCode { get; set; }
+        
+        public ApiResponse(bool isSucceeded, string message, int statusCode, T data, List<string> errors) { 
+            Succeeded = isSucceeded;
+            Message = message;
+            StatusCode = statusCode;
+            Data = data;
+            Errors = errors;
         }
 
-        public static ApiResponse<T> Failed(T data, string message = null, List<string> errors = null)
+        public ApiResponse(bool isSucceeded, int statusCode, string message)
         {
-            return new ApiResponse<T> { Succeeded = false, Data = data, Message = message, Errors = errors };
+            Succeeded = isSucceeded;
+            Message = message;
+            StatusCode = statusCode;
         }
 
         public ApiResponse(T data, string message = null)
         {
             Succeeded = true;
-            message = message;
-            data = data;
+            Message = message;
+            Data = data;
         }
+        public ApiResponse(bool isSucceeded, T data, List<string> errors)
+        {
+            Succeeded = isSucceeded;
+            Data = data;
+            Errors = errors;
+        }
+        public static ApiResponse<T> Success(T data, string message, int statusCode)
+        {
+            return new ApiResponse<T>(true, message, statusCode, data, new List<string>());
+        }
+        public static ApiResponse<T> Failed(List<string> errors)
+        {
+            return new ApiResponse<T>(false, default, errors);
+        } 
     }
 }

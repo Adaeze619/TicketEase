@@ -4,14 +4,14 @@ using TicketEase.Domain.Entities;
 
 namespace TicketEase.Persistence.DbContext
 {
-    public class TicketEaseDbContext : IdentityDbContext
+    public class TicketEaseDbContext : IdentityDbContext<AppUser>
     {
-        public TicketEaseDbContext(DbContextOptions options)
+        public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options)
             : base(options)
         {
 
         }
-        public DbSet<User> Users { get; set; }
+
         public DbSet<Board> Boards { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Manager> Managers { get; set; }
@@ -19,5 +19,24 @@ namespace TicketEase.Persistence.DbContext
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var item in ChangeTracker.Entries<BaseEntity>())
+            {
+                switch (item.State)
+                {
+                    case EntityState.Modified:
+                        item.Entity.UpdatedAt = DateTime.UtcNow;
+                        break;
+                    case EntityState.Added:
+                        item.Entity.Id = Guid.NewGuid().ToString();
+                        item.Entity.CreatedAt = DateTime.UtcNow;
+                        break;
+                    default: 
+                        break;
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken);
+        }
     }
 }
