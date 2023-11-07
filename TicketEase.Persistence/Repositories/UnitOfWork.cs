@@ -22,27 +22,20 @@ namespace TicketEase.Persistence.Repositories
 			UserRepository = new UserRepository(_ticketEaseDbContext);
         }
         public IBoardRepository BoardRepository { get; private set; }
-
 		public ICommentRepository CommentRepository { get; private set; }
-
 		public IManagerRepository ManagerRepository { get; private set; }
-
 		public IPaymentRepository PaymentRepository { get; private set; }
-
 		public IProjectRepository ProjectRepository { get; private set; }
-
 		public ITicketRepository TicketRepository { get; private set; }
-
 		public IUserRepository UserRepository { get; private set; }
-
-		public void Dispose()
-		{
-			_ticketEaseDbContext.Dispose();
-		}
 
 		public int SaveChanges()
 		{
 			return _ticketEaseDbContext.SaveChanges();
+		}
+		public void Dispose()
+		{
+			_ticketEaseDbContext.Dispose();
 		}
 	}
 }
