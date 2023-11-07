@@ -1,5 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TicketEase.Common.Utilities;
+using TicketEase.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TicketEase.Domain.Entities;
 
 namespace TicketEase.Persistence.DbContext
@@ -19,6 +28,21 @@ namespace TicketEase.Persistence.DbContext
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
+namespace TicketEase.Persistence.Context
+{
+    public class TicketEaseDbContext : IdentityDbContext<User>
+    {
+
+        public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options) 
+            : base(options)
+        {
+            
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            Seeder.SeedData(modelBuilder);
+        }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var item in ChangeTracker.Entries<BaseEntity>())
@@ -39,4 +63,7 @@ namespace TicketEase.Persistence.DbContext
             return await base.SaveChangesAsync(cancellationToken);
         }
     }
+
+   
 }
+ 
