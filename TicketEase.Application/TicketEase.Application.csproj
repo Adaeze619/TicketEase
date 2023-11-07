@@ -20,10 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\TicketEase.Common\TicketEase.Common.csproj" />
-    <ProjectReference Include="..\TicketEase.Domain\TicketEase.Domain.csproj" />
-    <ProjectReference Include="..\TicketEase.Persistence\TicketEase.Persistence.csproj" />
-  </ItemGroup>
-
 </Project>

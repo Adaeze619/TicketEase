@@ -18,9 +18,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
   </ItemGroup>
 
+
   <ItemGroup>
+    <!--<ProjectReference Include="..\TicketEase.Common\TicketEase.Common.csproj" />-->
     <ProjectReference Include="..\TicketEase.Domain\TicketEase.Domain.csproj" />
-	<ProjectReference Include="..\TicketEase.Common\TicketEase.Common.csproj" />
   </ItemGroup>
 
 </Project>

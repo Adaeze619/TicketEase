@@ -1,20 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Common.Utilities;
-using TicketEase.Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using TicketEase.Domain.Entities;
 
-namespace TicketEase.Persistence.DbContext
+
+namespace TicketEase.Persistence.Context
 {
-    public class TicketEaseDbContext : IdentityDbContext<AppUser>
+    public class TicketEaseDbContext : IdentityDbContext<User>
     {
+
         public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options)
             : base(options)
         {
@@ -27,17 +20,6 @@ namespace TicketEase.Persistence.DbContext
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-
-namespace TicketEase.Persistence.Context
-{
-    public class TicketEaseDbContext : IdentityDbContext<User>
-    {
-
-        public TicketEaseDbContext(DbContextOptions<TicketEaseDbContext> options) 
-            : base(options)
-        {
-            
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,7 +38,7 @@ namespace TicketEase.Persistence.Context
                         item.Entity.Id = Guid.NewGuid().ToString();
                         item.Entity.CreatedAt = DateTime.UtcNow;
                         break;
-                    default: 
+                    default:
                         break;
                 }
             }
@@ -64,6 +46,5 @@ namespace TicketEase.Persistence.Context
         }
     }
 
-   
+
 }
- 
