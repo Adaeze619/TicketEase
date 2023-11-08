@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using TicketEase.Application.Interfaces.Repositories;
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Application.ServicesImplementation;
+using Microsoft.EntityFrameworkCore;
 using Serilog.Core;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
@@ -28,6 +32,15 @@ var env = builder.Environment;
 
 
 // Authentication configuration
+builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketEaseConnection"))
+);
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBoardServices, BoardServices>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(MapperProfile));
+
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
 builder.Services.AddAutoMapper(typeof(Program));
