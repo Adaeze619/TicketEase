@@ -1,5 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Serilog.Core;
+using TicketEase.Application.Interfaces.Repositories;
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Application.ServicesImplementation;
+using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
+using TicketEase.Mapper;
+using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,16 +30,25 @@ var env = builder.Environment;
 // Authentication configuration
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Identity  configuration
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
+//builder.Services.AddTransient<Seeder>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProjectServices, ProjectServices>();
+
 
 
 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwagger();

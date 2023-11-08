@@ -1,6 +1,20 @@
-﻿namespace TicketEase.Mapper
+﻿using AutoMapper;
+using TicketEase.Application.DTO.Project;
+using TicketEase.Domain.Entities;
+
+namespace TicketEase.Mapper
 {
-    public class MapperProfile
+    public class MapperProfile : Profile
     {
+        public MapperProfile()
+        {
+            CreateMap<ProjectCreationDto, Project>()
+               .ForMember(dest => dest.Id, opt => opt.Ignore())
+               .ForMember(dest => dest.BoardId, opt => opt.Ignore());
+
+            CreateMap<ProjectUpdateDto, Project>();
+
+            CreateMap<Project, ProjectDto>();
+        }
     }
 }
