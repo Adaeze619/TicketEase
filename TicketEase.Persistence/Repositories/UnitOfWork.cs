@@ -40,5 +40,10 @@ namespace TicketEase.Persistence.Repositories
 		{
 			_ticketEaseDbContext.Dispose();
 		}
+
+		public int SaveChanges()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
