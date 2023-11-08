@@ -6,10 +6,12 @@ namespace TicketEase.Mapper
 {
     public class MapperProfile : Profile
     {
-        protected MapperProfile()
+        public MapperProfile()
         {
             CreateMap<BoardRequestDto, Board>();
             CreateMap<Board, BoardResponseDto>().ReverseMap();
+            CreateMap<UpdateUserDto, AppUser>();
+            CreateMap<AppUser, AppUserDto>();
         }
     }
 }

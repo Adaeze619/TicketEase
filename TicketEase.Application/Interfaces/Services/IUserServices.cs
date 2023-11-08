@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TicketEase.Application.DTO;
+using TicketEase.Domain;
 
 namespace TicketEase.Application.Interfaces.Services
 {
-    internal interface IUserServices
+    public interface IUserServices
     {
+        Task<ApiResponse<AppUserDto>> GetUserByIdAsync(string userId);
+        Task<ApiResponse<bool>> UpdateUserAsync(string userId, UpdateUserDto userUpdateDto);
     }
 }

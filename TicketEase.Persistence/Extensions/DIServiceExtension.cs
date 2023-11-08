@@ -30,6 +30,7 @@ namespace TicketEase.Persistence.Extensions
            // services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
+            services.AddScoped<IUserServices, UserServices>();
 
 
 

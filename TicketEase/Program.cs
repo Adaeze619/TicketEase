@@ -21,6 +21,7 @@ var env = builder.Environment;
 //builder.Services.AddHttpClient();
 //builder.Services.AddCloudinaryService(config);
 //builder.Services.AddMailService(config);
+builder.Services.AddDependencies(builder.Configuration);
 
 
 
@@ -32,7 +33,7 @@ builder.Services.AddDbContext<TicketEaseDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBoardServices, BoardServices>();
 
-builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddAuthentication();
