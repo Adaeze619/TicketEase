@@ -9,9 +9,9 @@ namespace TicketEase.Persistence.Repositories
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly TicketEaseDbContext _ticketEaseDbContext;
-        public UnitOfWork(TicketEaseDbContext ticketEaseDbContext)
-        {
-            _ticketEaseDbContext = ticketEaseDbContext;
+		public UnitOfWork(TicketEaseDbContext ticketEaseDbContext)
+		{
+			_ticketEaseDbContext = ticketEaseDbContext;
 			BoardRepository = new BoardRepository(_ticketEaseDbContext);
 			CommentRepository = new CommentRepository(_ticketEaseDbContext);
 			ManagerRepository = new ManagerRepository(_ticketEaseDbContext);
@@ -19,8 +19,8 @@ namespace TicketEase.Persistence.Repositories
 			ProjectRepository = new ProjectRepository(_ticketEaseDbContext);
 			TicketRepository = new TicketRepository(_ticketEaseDbContext);
 			UserRepository = new UserRepository(_ticketEaseDbContext);
-        }
-        public IBoardRepository BoardRepository { get; private set; }
+		}
+		public IBoardRepository BoardRepository { get; private set; }
 
 		public ICommentRepository CommentRepository { get; private set; }
 
@@ -34,13 +34,18 @@ namespace TicketEase.Persistence.Repositories
 
 		public IUserRepository UserRepository { get; private set; }
 
-		public int SaveChanges()
-		{
-			return _ticketEaseDbContext.SaveChanges();
-		}
+
 		public void Dispose()
 		{
 			_ticketEaseDbContext.Dispose();
 		}
+<<<<<<< HEAD
+=======
+
+		public int SaveChanges()
+		{
+			throw new NotImplementedException();
+		}
+>>>>>>> 2eb9a4ba010210a0e8797fb925d810e9d9808ef9
 	}
 }
