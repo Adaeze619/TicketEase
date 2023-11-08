@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x4SQoIwqUqV1ZXvTwWqw5komyL0eQ4U76nirvlxyBtYS/F5X7a4MKDhZMcDgGBSpk46nKLRTLSD53TEWmADZYw==",
+  "dgSpecHash": "2lCc1uZ/vp5vDXa/izGmX50uHWzIRY/q5TxM3jy8lQi74tjqZkDHjVRLMj/NF2mQWjAfe9lyEz08WWu6RgFpQA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\SQ017-TicketEase-Live-Project-Backend\\TicketEase\\TicketEase.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Live PROJECT\\Amended\\SQ017-TicketEase-Live-Project-Backend\\TicketEase\\TicketEase.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",

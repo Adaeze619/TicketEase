@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "T0Nyne3+Smme2JyX8MSd1HSsC7QnmneA2rqUPwS/KYfT9PkJG4Dx7SZKw33xAJ1gZEpUlI8971lcMXuIKUIZVQ==",
+  "dgSpecHash": "rPt7W7m7vwdL/cZPsU9wRDkm8DlfjU3qXFFoIB1brKSH9KWqKnKKlU/i2Q1JvbxCKrkkVUDydmXDESC8Zf3/iw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\SQ017-TicketEase-Live-Project-Backend\\TicketEase.Domain\\TicketEase.Domain.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Live PROJECT\\Amended\\SQ017-TicketEase-Live-Project-Backend\\TicketEase.Domain\\TicketEase.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0\\microsoft.aspnetcore.cryptography.internal.6.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.0\\microsoft.aspnetcore.cryptography.keyderivation.6.0.0.nupkg.sha512",
