@@ -1,6 +1,15 @@
-﻿namespace TicketEase.Mapper
+﻿using AutoMapper;
+using TicketEase.Application.DTO;
+using TicketEase.Domain.Entities;
+
+namespace TicketEase.Mapper
 {
-    public class MapperProfile
+    public class MapperProfile : Profile
     {
+        public MapperProfile()
+        {
+            CreateMap<Manager, EditManagerDto>().ReverseMap();
+           
+        }
     }
 }
