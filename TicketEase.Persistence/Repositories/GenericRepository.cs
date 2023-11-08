@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Application.Interfaces.Repositories;
+﻿using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Persistence.Context;
 
 namespace TicketEase.Persistence.Repositories
 {
-	public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
 		private readonly TicketEaseDbContext _ticketEaseDbContext;
         public GenericRepository(TicketEaseDbContext ticketEaseDbContext)

@@ -1,5 +1,4 @@
 ﻿
-
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Domain.Entities;
 using TicketEase.Persistence.Context;
@@ -42,11 +41,6 @@ namespace TicketEase.Persistence.Repositories
 		public void Dispose()
 		{
 			_ticketEaseDbContext.Dispose();
-		}
-
-		public int SaveChanges()
-		{
-			return _ticketEaseDbContext.SaveChanges();
 		}
 	}
 }

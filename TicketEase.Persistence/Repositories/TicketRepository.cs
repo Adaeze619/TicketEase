@@ -1,12 +1,12 @@
-﻿
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Domain.Entities;
+using TicketEase.Domain.Enums;
 using TicketEase.Persistence.Context;
 
 namespace TicketEase.Persistence.Repositories
 {
-	public class TicketRepository : GenericRepository<Ticket>, ITicketRepository
+    public class TicketRepository : GenericRepository<Ticket>, ITicketRepository
 	{
 		public TicketRepository(TicketEaseDbContext ticketEaseDbContext) : base(ticketEaseDbContext) { }
 
@@ -35,7 +35,7 @@ namespace TicketEase.Persistence.Repositories
 			return GetAll();
 		}
 
-		public void UpdateTicket(Ticket ticket)
+        public void UpdateTicket(Ticket ticket)
 		{
 			Update(ticket);
 		}
