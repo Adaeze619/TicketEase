@@ -10,15 +10,9 @@ namespace TicketEase.Persistence.Repositories
 	{
 		public UserRepository(TicketEaseDbContext ticketEaseDbContext): base(ticketEaseDbContext) { }
 
-		public void AddUser(AppUser appUser)
-		{
-			Add(appUser);
-		}
+		public void AddUser(AppUser appUser) => Add(appUser);
 
-		public void DeleteUser(AppUser appUser)
-		{
-			Delete(appUser);
-		}
+		public void DeleteUser(AppUser appUser) => Delete(appUser);
 
 		public List<AppUser> FindUser(Expression<Func<AppUser, bool>> condition)
 		{
@@ -35,9 +29,6 @@ namespace TicketEase.Persistence.Repositories
 			return GetById(id);
 		}
 
-		public void UpdateUser(AppUser appUser)
-		{
-			Update(appUser);
-		}
+		public void UpdateUser(AppUser appUser) => Update(appUser);
 	}
 }
