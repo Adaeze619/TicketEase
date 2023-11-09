@@ -16,8 +16,8 @@ namespace TicketEase.Persistence.Extensions
                 ValidateIssuer = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidAudience = configuration["JwtSettings : ValidAudience"],
-                ValidIssuer = configuration["JwtSettings : ValidIssuer"],
+                ValidAudience = configuration["JwtSettings:ValidAudience"],
+                ValidIssuer = configuration["JwtSettings:ValidIssuer"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding
                     .UTF8.GetBytes("secretKey")),
                 ClockSkew = TimeSpan.Zero
