@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TicketEase.Application.DTO;
@@ -40,7 +41,7 @@ namespace TicketEase.Application.ServicesImplementation
                 _unitOfWork.SaveChanges();
 
                 _logger.LogInformation("Manager updated successfully");
-                return ApiResponse<string>.Success("Success", "Manager updated successfully", 200);
+                return ApiResponse<string>.Success("Success", "Manager updated successfully", StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {
@@ -55,17 +56,32 @@ namespace TicketEase.Application.ServicesImplementation
             {
                 perPage = perPage <= 0 ? 10 : perPage;
                 page = page <= 0 ? 1 : page;
-                var managers =  _unitOfWork.ManagerRepository.GetAll();
-                var pagedManaagers = await Pagination<Manager>.GetPager(
+
+                var managers = _unitOfWork.ManagerRepository.GetAll();
+
+                var pagedManagers = await Pagination<Manager>.GetPager(
                     managers,
                     perPage,
                     page,
                     manager => manager.CompanyName,
                     manager => manager.BusinessEmail);
 
-                return new ApiResponse<PageResult<IEnumerable<Manager>>>(true, "Operation succesful", 200, null, new List<string>());
+                var response = new ApiResponse<PageResult<IEnumerable<Manager>>>(
+                    true,
+                    "Operation successful",
+                    200,
+                    new PageResult<IEnumerable<Manager>>
+                    {
+                        Data = pagedManagers.Data.ToList(),
+                        TotalPageCount = pagedManagers.TotalPageCount,
+                        CurrentPage = pagedManagers.CurrentPage,
+                        PerPage = perPage,
+                        TotalCount = pagedManagers.TotalCount
+                    },
+                    new List<string>());
 
-                }
+                return response;
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving paged managers");
@@ -87,7 +103,7 @@ namespace TicketEase.Application.ServicesImplementation
 
                 var Manager = _mapper.Map<EditManagerDto>(existingManager);
                 _logger.LogInformation("Manager retrieved successfully");
-                return ApiResponse<EditManagerDto>.Success(Manager, "Manager retrieved successfully", 200);
+                return ApiResponse<EditManagerDto>.Success(Manager, "Manager retrieved successfully", StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {
@@ -96,21 +112,6 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        public ApiResponse<string> AddManager(Manager managerDTO)
-        {
-            try
-            {
-                var managerEntity = _mapper.Map<Manager>(managerDTO);
-                _unitOfWork.ManagerRepository.AddManager(managerEntity);
-                _unitOfWork.SaveChanges();
-                _logger.LogInformation("Manager added successfully");
-                return ApiResponse<string>.Success("Success", "Manager added successfully", 200);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while adding a manager");
-                return ApiResponse<string>.Failed(new List<string> { "Error: " + ex.Message });
-            }
-        }
+       
     }
 }
