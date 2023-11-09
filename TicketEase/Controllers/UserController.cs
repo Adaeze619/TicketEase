@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
+using TicketEase.Domain;
 
 namespace TicketEase.Controllers
 {
@@ -13,13 +14,17 @@ namespace TicketEase.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloudinaryServices _cloudinaryServices;
         private readonly IMapper _mapper;
-        
+        private readonly IUserServices _userServices;
+        private readonly ILogger<UserController> _logger;
+
         public UserController(IUnitOfWork unitOfWork, ICloudinaryServices cloudinaryServices,
-           IMapper mapper)
+           IMapper mapper,IUserServices userServices, ILogger<UserController> logger)
         {
             _unitOfWork = unitOfWork;
             _cloudinaryServices = cloudinaryServices;
             _mapper = mapper;
+             _userServices = userServices;
+            _logger = logger;
         }
 
         [HttpPatch("photo/{id}")]
@@ -46,6 +51,21 @@ namespace TicketEase.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] UpdateUserDto updateUserDto)
+        {
+            var updateResult = await _userServices.UpdateUserAsync(id, updateUserDto);
+
+            if (updateResult.Succeeded)
+            {
+                return Ok(new ApiResponse<bool>(true, "User updated successfully.", 200, true, null));
+            }
+
+            _logger.LogError("User update failed: {Message}", updateResult.Message);
+            return BadRequest(new ApiResponse<bool>(false, "Failed to update user.", 400, false, updateResult.Errors));
+        }
+
     }
 }
 

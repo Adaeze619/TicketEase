@@ -22,6 +22,7 @@ namespace TicketEase.Mapper
             CreateMap<AppUser, UpdatePhotoDTO>();
             CreateMap<AppUser, AppUserDto>();
             CreateMap<PageResult<IEnumerable<AppUser>>, PageResult<IEnumerable<AppUserDto>>>();
+            CreateMap<UpdateUserDto, AppUser>();
         }
     }
 }
