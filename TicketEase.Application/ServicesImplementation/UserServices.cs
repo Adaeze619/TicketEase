@@ -22,37 +22,6 @@ namespace TicketEase.Application.ServicesImplementation
             _mapper = mapper;
         }
 
-
-
-
-        //public async Task<ApiResponse<AppUserDto>> GetUserByIdAsync(string userId)
-        //{
-        //    try
-        //    {
-        //        var user = _unitOfWork.UserRepository.GetUserById(userId);
-
-        //        if (user == null)
-        //        {
-        //            return ApiResponse<AppUserDto>.Failed(false, "User not found.", 404, new List<string> { "User not found." });
-        //        }
-        //        else
-        //        {
-        //            var userDto = _mapper.Map<AppUserDto>(user);
-
-        //            return ApiResponse<AppUserDto>.Success(userDto, "User found.", 200);
-        //        }
-                
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        Log.Error(ex, "An error occurred while retrieving the user. UserID: {UserId}", userId);
-
-
-        //        return ApiResponse<AppUserDto>.Failed(false, "An error occurred while retrieving the user.", 500, new List<string> { ex.Message });
-        //    }
-        //}
-
         public async Task<ApiResponse<AppUserDto>> GetUserByIdAsync(string userId)
 {
     try
