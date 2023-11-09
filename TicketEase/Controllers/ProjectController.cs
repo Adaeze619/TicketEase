@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Services;
+using TicketEase.Common.Utilities;
+using TicketEase.Domain.Entities;
 
 namespace TicketEase.Controllers
 {
@@ -25,6 +27,21 @@ namespace TicketEase.Controllers
         public async Task<IActionResult> UpdateProject(string boardId, string projectId, [FromBody] UpdateProjectRequestDto projectUpdate)
         {
             return Ok(await _projectServices.UpdateProjectAsync(boardId, projectId, projectUpdate));
+        }
+
+        [HttpGet("{projectId}")]
+        public IActionResult GetProjectById(string projectId)
+        {
+            return Ok(_projectServices.GetProjectById(projectId));
+
+        }
+
+        [HttpGet("GetProjectsByBoardId")]
+        public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardId(string boardId, int perPage, int page)
+        {
+            var projects = _projectServices.GetProjectsByBoardId(boardId, perPage, page);
+
+            return projects;
         }
 
     }
