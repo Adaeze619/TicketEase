@@ -31,6 +31,8 @@ builder.Services.AddDbContext<TicketEaseDbContext>(options =>
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBoardServices, BoardServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
