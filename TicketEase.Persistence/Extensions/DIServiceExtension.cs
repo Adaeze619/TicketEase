@@ -37,6 +37,7 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IManagerServices, ManagerServices>();
 
 
 

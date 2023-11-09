@@ -12,6 +12,7 @@ namespace TicketEase.Mapper
         
     public class MapperProfile : Profile
     {
+        
         public MapperProfile()
         {
             CreateMap<ProjectRequestDto, Project>()
@@ -23,6 +24,7 @@ namespace TicketEase.Mapper
             CreateMap<Project, ProjectReponseDto>().ReverseMap();
             CreateMap<BoardRequestDto, Board>();
             CreateMap<Board, BoardResponseDto>().ReverseMap();
+            CreateMap<AppUser, UpdatePhotoDTO>();
         }
     }
 }
