@@ -46,8 +46,8 @@ builder.Services.AddLoggingConfiguration(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
+//builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
