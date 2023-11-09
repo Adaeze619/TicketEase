@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Common.Utilities;
@@ -30,19 +29,14 @@ namespace TicketEase.Controllers
         }
 
         [HttpGet("{projectId}")]
-        public IActionResult GetProjectById(string projectId)
-        {
-            return Ok(_projectServices.GetProjectById(projectId));
-
-        }
+        public IActionResult GetProjectById(string projectId) => Ok(_projectServices.GetProjectByIdAsync(projectId));
 
         [HttpGet("GetProjectsByBoardId")]
         public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardId(string boardId, int perPage, int page)
         {
-            var projects = _projectServices.GetProjectsByBoardId(boardId, perPage, page);
+            var projects = _projectServices.GetProjectsByBoardIdAsync(boardId, perPage, page);
 
             return projects;
         }
-
     }
 }

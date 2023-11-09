@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
@@ -111,7 +106,7 @@ namespace TicketEase.Application.ServicesImplementation
 
         }
 
-        public ApiResponse<Project> GetProjectById(string projectId)
+        public async Task<ApiResponse<Project>> GetProjectByIdAsync(string projectId)
         {
             try
             {
@@ -128,7 +123,7 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardId(string boardId, int perPage, int page)
+        public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page)
         {
             try
             {
@@ -146,9 +141,6 @@ namespace TicketEase.Application.ServicesImplementation
 
                 return Task.FromException<PageResult<IEnumerable<Project>>>(ex);
             }
-
         }
     }
-
-
 }

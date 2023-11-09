@@ -1,20 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Application.Interfaces.Services;
-using TicketEase.Application.ServicesImplementation;
-using Microsoft.EntityFrameworkCore;
-using Serilog.Core;
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Application.Interfaces.Services;
-using TicketEase.Application.ServicesImplementation;
 using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
 using TicketEase.Domain.Entities;
 using TicketEase.Mapper;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
-using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
