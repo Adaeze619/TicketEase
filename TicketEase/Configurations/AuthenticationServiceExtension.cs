@@ -12,6 +12,7 @@ namespace TicketEase.Persistence.Extensions
             
             var TokenParameters = new TokenValidationParameters
             {
+
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
