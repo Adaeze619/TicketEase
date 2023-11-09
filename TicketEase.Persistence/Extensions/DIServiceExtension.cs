@@ -25,9 +25,13 @@ namespace TicketEase.Persistence.Extensions
 
 
 
-           // services.AddDbContext<DataContext>();
+            // services.AddDbContext<DataContext>();
 
-           // services.AddTransient<IEmailService, EmailService>();
+            // services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBoardServices, BoardServices>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IUserServices, UserServices>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
 

@@ -47,29 +47,6 @@ namespace TicketEase.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "4fcae2fc-dab1-4f54-bac5-90f459156ac6",
-                            ConcurrencyStamp = "24d4a2f5-6bc0-4360-9bf7-cc2e63040627",
-                            Name = "Manager",
-                            NormalizedName = "Manager"
-                        },
-                        new
-                        {
-                            Id = "cce2a963-34bb-4956-a195-19d22c47c47b",
-                            ConcurrencyStamp = "b2f62dea-d9b1-4a50-87e3-ef66d28125f9",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = "72b7b1f4-f761-4d03-9b05-5bcaffaa04a0",
-                            ConcurrencyStamp = "bf5461ca-1066-4271-80f3-cc62452687b4",
-                            Name = "User",
-                            NormalizedName = "User"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -95,76 +72,6 @@ namespace TicketEase.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6680fd96-61f2-456f-9251-b4978e3da095",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e7819500-514f-4fd3-a80b-35a628c3eb03",
-                            Email = "superadmin@library.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SUPERADMIN@LIBRARY.COM",
-                            NormalizedUserName = "SUPERADMIN@LIBRARY.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECg4SRSDbMHgd5CqGATtP+aXBn1w7JCd4ALmQbMtMtQIvCTezgYOxX1LROQG1xq6sg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "57469b8f-6df0-4a91-a64f-dbca004c8cea",
-                            TwoFactorEnabled = false,
-                            UserName = "superadmin@library.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -227,23 +134,6 @@ namespace TicketEase.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "6680fd96-61f2-456f-9251-b4978e3da095",
-                            RoleId = "4fcae2fc-dab1-4f54-bac5-90f459156ac6"
-                        },
-                        new
-                        {
-                            UserId = "6680fd96-61f2-456f-9251-b4978e3da095",
-                            RoleId = "cce2a963-34bb-4956-a195-19d22c47c47b"
-                        },
-                        new
-                        {
-                            UserId = "6680fd96-61f2-456f-9251-b4978e3da095",
-                            RoleId = "72b7b1f4-f761-4d03-9b05-5bcaffaa04a0"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
