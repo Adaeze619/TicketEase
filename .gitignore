@@ -244,5 +244,6 @@ paket-files/
 .idea/
 *.sln.iml
 
+appsettings.json
 appsettings.Development.json
 TicketEase/*.txt

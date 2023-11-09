@@ -12,7 +12,11 @@ using TicketEase.Persistence.Context;
 namespace TicketEase.Persistence.Migrations
 {
     [DbContext(typeof(TicketEaseDbContext))]
+<<<<<<<< HEAD:TicketEase.Persistence/Migrations/20231108191250_Initial.Designer.cs
     [Migration("20231108191250_Initial")]
+========
+    [Migration("20231108223604_Initial")]
+>>>>>>>> 82cd00eff8fa092f92ccd1f5cf3af4bb2e90c670:TicketEase.Persistence/Migrations/20231108223604_Initial.Designer.cs
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
