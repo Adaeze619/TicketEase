@@ -23,9 +23,6 @@ var env = builder.Environment;
 
 builder.Services.AddDependencies(builder.Configuration);
 
-
-
-
 // Authentication configuration
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
@@ -33,7 +30,6 @@ builder.Services.AuthenticationConfiguration(configuration);
 // Identity  configuration
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
-
 
 builder.Services.AddSingleton(provider =>
 {
@@ -51,6 +47,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<TicketEaseDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
+
 builder.Services.AddSwagger();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
@@ -58,7 +62,6 @@ builder.Services.AddDbContext<TicketEaseDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,7 +13,7 @@ namespace TicketEase.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloudinaryServices _cloudinaryServices;
         private readonly IMapper _mapper;
-
+        
         public UserController(IUnitOfWork unitOfWork, ICloudinaryServices cloudinaryServices,
            IMapper mapper)
         {
@@ -28,22 +28,16 @@ namespace TicketEase.Controllers
             try
             {
                 var user = _unitOfWork.UserRepository.GetUserById(id);
-
                 if (user == null)
                     return NotFound("User not found");
-
                 var file = model.PhotoFile;
                 if (file == null || file.Length <= 0)
                     return BadRequest("Invalid file size");
-
                 _mapper.Map(model, user);
-
                 var imageUrl = await _cloudinaryServices.UploadContactImage(id, file);
-
                 // Update the user's photo URL in the repository
                 user.ImageUrl = imageUrl;
                 _unitOfWork.UserRepository.Update(user);
-
                 // Return the updated URL
                 return Ok(new { Url = imageUrl });
             }
@@ -52,7 +46,7 @@ namespace TicketEase.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-
     }
 }
+
+
