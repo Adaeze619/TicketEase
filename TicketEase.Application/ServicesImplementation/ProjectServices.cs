@@ -87,13 +87,6 @@ namespace TicketEase.Application.ServicesImplementation
                 return new ApiResponse<ProjectDto>(false, 404, $"Board with ID {projectId} not found.");
             }
 
-            // Check if a project with the updated title already exists in the board
-            var projectWithSameTitle =  _unitOfWork.ProjectRepository.FindProject(p => p.BoardId == boardId && p.Title == projectUpdate.Title);
-            if (projectWithSameTitle != null)
-            {
-                return new ApiResponse<ProjectDto>(false, 400, $"Project with the same title already exists in the board");
-            }
-
             try
             {
                 // Update project properties based on projectUpdate

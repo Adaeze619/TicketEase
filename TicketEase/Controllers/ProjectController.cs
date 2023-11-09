@@ -18,30 +18,23 @@ namespace TicketEase.Controllers
         [HttpPost("AddProject")]
         public async Task<IActionResult> CreateProject(string boardId, [FromBody] ProjectCreationDto project)
         {
-            var response = await _projectServices.CreateProjectAsync(boardId, project);
 
-            if (response.Succeeded)
-            {
-                return CreatedAtRoute(
-                    "GetProject",
-                    new { boardId, projectId = response.Data.Id },
-                    response);
-            }
 
-            return StatusCode(response.StatusCode, response);
+            return Ok(_projectServices.CreateProjectAsync(boardId, project));
+           
         }
 
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateProject(string boardId, string projectId, [FromBody] ProjectUpdateDto projectUpdate)
         {
-            var response = await _projectServices.UpdateProjectAsync(boardId, projectId, projectUpdate);
+            return Ok(await _projectServices.UpdateProjectAsync(boardId, projectId, projectUpdate));
 
-            if (response.Succeeded)
-            {
-                return Ok(response);
-            }
+            //if (response.Succeeded)
+            //{
+            //    return Ok(response);
+            //}
 
-            return StatusCode(response.StatusCode, response);
+            //return StatusCode(response.StatusCode, response);
         }
 
     }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
@@ -9,6 +10,7 @@ using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
 using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
+using TicketEase.Domain.Entities;
 using TicketEase.Mapper;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
@@ -23,24 +25,14 @@ var services = builder.Services;
 var env = builder.Environment;
 
 
-// Add services to the container.
-//builder.Services.AddHttpClient();
-//builder.Services.AddCloudinaryService(config);
-//builder.Services.AddMailService(config);
-
-
-
-
-// Authentication configuration
-builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString"))
-);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBoardServices, BoardServices>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddAuthentication();
@@ -56,9 +48,6 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProjectServices, ProjectServices>();
 
 
-
-
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<TicketEaseDbContext>(options =>
@@ -66,7 +55,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStri
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<TicketEaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddSwagger();
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+			   .AddEntityFrameworkStores<TicketEaseDbContext>()
+			   .AddDefaultTokenProviders();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
@@ -78,7 +74,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket Ease v1"));
 }
-
+using (var scope = app.Services.CreateScope())
+{
+	var serviceprovider = scope.ServiceProvider;
+	Seeder.SeedRolesAndSuperAdmin(serviceprovider);
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -86,3 +86,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
