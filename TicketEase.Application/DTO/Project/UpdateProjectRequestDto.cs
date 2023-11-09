@@ -8,13 +8,11 @@ using TicketEase.Domain.Entities;
 
 namespace TicketEase.Application.DTO.Project
 {
-    public class ProjectDto
+    public class UpdateProjectRequestDto
     {
-        public string Id { get; set; }
-        public string Title { get; set; }
-
+        [Required]
+        public string Title { get; set; } = string.Empty;
+        [MaxLength(500)]
         public string Description { get; set; }
-
-        public ICollection<Ticket> Tickets { get; set; }
     }
 }

@@ -8,9 +8,9 @@ using TicketEase.Domain.Entities;
 
 namespace TicketEase.Application.DTO.Project
 {
-    public class ProjectUpdateDto
+    public class ProjectRequestDto
     {
-        [Required(ErrorMessage = "You should provide a title value.")]
+        [Required]
         public string Title { get; set; } = string.Empty;
         [MaxLength(500)]
         public string Description { get; set; }

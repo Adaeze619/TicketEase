@@ -8,11 +8,13 @@ using TicketEase.Domain.Entities;
 
 namespace TicketEase.Application.DTO.Project
 {
-    public class ProjectCreationDto
+    public class ProjectReponseDto
     {
-        [Required(ErrorMessage = "You should provide a title value.")]
-        public string Title { get; set; } = string.Empty;
-        [MaxLength(500)]
+        public string Id { get; set; }
+        public string Title { get; set; }
+
         public string Description { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

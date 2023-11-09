@@ -26,14 +26,14 @@ namespace TicketEase.Application.ServicesImplementation
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<ProjectDto>> CreateProjectAsync(string id, ProjectCreationDto project)
+        public async Task<ApiResponse<ProjectReponseDto>> CreateProjectAsync(string id, ProjectRequestDto project)
         {
-            ApiResponse<ProjectDto> response;
+            ApiResponse<ProjectReponseDto> response;
            
                 var existingboard = _unitOfWork.BoardRepository.GetById(id);
                 if (existingboard == null)
                 {
-                   response = new ApiResponse<ProjectDto>(false, 404, $"Board with ID {id} not found.");
+                   response = new ApiResponse<ProjectReponseDto>(false, 404, $"Board with ID {id} not found.");
                     return response;
                 }
 
@@ -41,7 +41,7 @@ namespace TicketEase.Application.ServicesImplementation
 
                 if (existingProject != null)
                 {
-                  response = new ApiResponse<ProjectDto>(false, 400, $"Project with the same name already exists in the board.");
+                  response = new ApiResponse<ProjectReponseDto>(false, 400, $"Project with the same name already exists in the board.");
                     return response;
                 }
             try
@@ -53,9 +53,9 @@ namespace TicketEase.Application.ServicesImplementation
                 _unitOfWork.ProjectRepository.AddProject(newProject);
                 _unitOfWork.SaveChanges();
 
-                var createdProject = _mapper.Map<ProjectDto>(newProject);
+                var createdProject = _mapper.Map<ProjectReponseDto>(newProject);
                
-                response = ApiResponse<ProjectDto>.Success(createdProject, $"Successfully created a project in the board:{id}", 201);
+                response = ApiResponse<ProjectReponseDto>.Success(createdProject, $"Successfully created a project in the board:{id}", 201);
                 return response;
             }
             catch (Exception ex)
@@ -64,19 +64,19 @@ namespace TicketEase.Application.ServicesImplementation
                 _logger.LogError(ex, "Error occurred while adding a board");
                 var errorList = new List<string>();
                 errorList.Add(ex.Message);
-                response = ApiResponse<ProjectDto>.Failed(false, "Error occurred while creating a project in a board",500, new List<string> { ex.Message });
+                response = ApiResponse<ProjectReponseDto>.Failed(false, "Error occurred while creating a project in a board",500, new List<string> { ex.Message });
                 return response;
 
             }
         }
 
-        public async Task<ApiResponse<ProjectDto>> UpdateProjectAsync(string boardId, string projectId, ProjectUpdateDto projectUpdate)
+        public async Task<ApiResponse<ProjectReponseDto>> UpdateProjectAsync(string boardId, string projectId, UpdateProjectRequestDto projectUpdate)
         {
             // Check if the board exists
             var existingBoard =  _unitOfWork.BoardRepository.GetById(boardId);
             if (existingBoard == null)
             {
-                return new ApiResponse<ProjectDto>(false, 404, $"Board with ID {boardId} not found.");
+                return new ApiResponse<ProjectReponseDto>(false, 404, $"Board with ID {boardId} not found.");
 
             }
 
@@ -84,7 +84,7 @@ namespace TicketEase.Application.ServicesImplementation
             var existingProject =  _unitOfWork.ProjectRepository.GetById(projectId);
             if (existingProject == null)
             {
-                return new ApiResponse<ProjectDto>(false, 404, $"Board with ID {projectId} not found.");
+                return new ApiResponse<ProjectReponseDto>(false, 404, $"Board with ID {projectId} not found.");
             }
 
             try
@@ -92,18 +92,17 @@ namespace TicketEase.Application.ServicesImplementation
                 // Update project properties based on projectUpdate
                 existingProject.Title = projectUpdate.Title;
                 existingProject.Description = projectUpdate.Description;
-                // Update other properties as needed
 
                 _unitOfWork.ProjectRepository.UpdateProject(existingProject);
                  _unitOfWork.SaveChanges();
 
-                var updatedProjectDto = _mapper.Map<ProjectDto>(existingProject);
-                return ApiResponse<ProjectDto>.Success(updatedProjectDto, $"Successfully updated project with ID {projectId}", 200);
+                var updatedProjectDto = _mapper.Map<ProjectReponseDto>(existingProject);
+                return ApiResponse<ProjectReponseDto>.Success(updatedProjectDto, $"Successfully updated project with ID {projectId}", 200);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while updating a project");
-                return ApiResponse<ProjectDto>.Failed(false,"Error occurred while updating a project", 500, new List<string> { ex.Message });
+                return ApiResponse<ProjectReponseDto>.Failed(false,"Error occurred while updating a project", 500, new List<string> { ex.Message });
             }
         }
 

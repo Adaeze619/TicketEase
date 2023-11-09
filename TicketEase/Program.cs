@@ -25,13 +25,13 @@ var services = builder.Services;
 var env = builder.Environment;
 
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IBoardServices, BoardServices>();
-builder.Services.AddScoped<ITicketService, TicketService>();
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IBoardServices, BoardServices>();
+//builder.Services.AddScoped<ITicketService, TicketService>();
+//builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+//builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+//builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
@@ -43,9 +43,6 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
 //builder.Services.AddTransient<Seeder>();
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IProjectServices, ProjectServices>();
 
 
 builder.Services.AddControllers();
@@ -62,7 +59,8 @@ builder.Services.AddSwagger();
 builder.Services.AddIdentity<AppUser, IdentityRole>()
 			   .AddEntityFrameworkStores<TicketEaseDbContext>()
 			   .AddDefaultTokenProviders();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddDependencies(configuration);
 
 var app = builder.Build();
 

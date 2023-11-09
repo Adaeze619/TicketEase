@@ -16,25 +16,15 @@ namespace TicketEase.Controllers
         }
 
         [HttpPost("AddProject")]
-        public async Task<IActionResult> CreateProject(string boardId, [FromBody] ProjectCreationDto project)
+        public async Task<IActionResult> CreateProject(string boardId, [FromBody] ProjectRequestDto project)
         {
-
-
-            return Ok(_projectServices.CreateProjectAsync(boardId, project));
-           
+            return Ok(_projectServices.CreateProjectAsync(boardId, project)); 
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> UpdateProject(string boardId, string projectId, [FromBody] ProjectUpdateDto projectUpdate)
+        public async Task<IActionResult> UpdateProject(string boardId, string projectId, [FromBody] UpdateProjectRequestDto projectUpdate)
         {
             return Ok(await _projectServices.UpdateProjectAsync(boardId, projectId, projectUpdate));
-
-            //if (response.Succeeded)
-            //{
-            //    return Ok(response);
-            //}
-
-            //return StatusCode(response.StatusCode, response);
         }
 
     }

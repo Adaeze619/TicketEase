@@ -14,13 +14,13 @@ namespace TicketEase.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<ProjectCreationDto, Project>()
+            CreateMap<ProjectRequestDto, Project>()
                .ForMember(dest => dest.Id, opt => opt.Ignore())
                .ForMember(dest => dest.BoardId, opt => opt.Ignore());
 
-            CreateMap<ProjectUpdateDto, Project>();
+            CreateMap<UpdateProjectRequestDto, Project>();
 
-            CreateMap<Project, ProjectDto>();
+            CreateMap<Project, ProjectReponseDto>().ReverseMap();
             CreateMap<BoardRequestDto, Board>();
             CreateMap<Board, BoardResponseDto>().ReverseMap();
         }

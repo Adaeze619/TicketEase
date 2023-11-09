@@ -10,7 +10,7 @@ namespace TicketEase.Application.Interfaces.Services
 {
     public interface IProjectServices
     {
-        Task<ApiResponse<ProjectDto>> CreateProjectAsync(string boardId, ProjectCreationDto project);
-        Task<ApiResponse<ProjectDto>> UpdateProjectAsync(string boardId, string projectId, ProjectUpdateDto projectUpdate);
+        Task<ApiResponse<ProjectReponseDto>> CreateProjectAsync(string boardId, ProjectRequestDto project);
+        Task<ApiResponse<ProjectReponseDto>> UpdateProjectAsync(string boardId, string projectId, UpdateProjectRequestDto projectUpdate);
     }
 }
