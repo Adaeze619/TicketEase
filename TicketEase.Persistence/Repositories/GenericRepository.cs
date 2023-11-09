@@ -5,7 +5,7 @@ namespace TicketEase.Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
-		private readonly TicketEaseDbContext _ticketEaseDbContext;
+        protected readonly TicketEaseDbContext _ticketEaseDbContext;
 		public GenericRepository(TicketEaseDbContext ticketEaseDbContext)
 		{
 			_ticketEaseDbContext = ticketEaseDbContext;
@@ -22,7 +22,5 @@ namespace TicketEase.Persistence.Repositories
 		public T GetById(string id)=>_ticketEaseDbContext.Set<T>().Find(id);
 
 		public void Update(T entity)=>_ticketEaseDbContext.Set<T>().Update(entity);
-
-       // Task UpdateEntityAsync<T>(T entity) where T : class;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.Interfaces.Services;
-<<<<<<< HEAD
 using TicketEase.Domain;
+using TicketEase.Domain.Enums;
 
 namespace TicketEase.Controllers
 {
@@ -17,64 +17,49 @@ namespace TicketEase.Controllers
         }
 
         [HttpDelete("{ticketId}")]
-        public async Task<ActionResult<ApiResponse<bool>>> DeleteTicketById(string ticketId)
+        public async Task<ActionResult<ApiResponse<bool>>>
+        DeleteTicketById(string ticketId)
         {
-            var response = await _ticketService.DeleteTicketByIdAsync(ticketId);
-
-            if (response.Succeeded)
+            try
             {
-                return Ok(response);
-            }
+                if (string.IsNullOrEmpty(ticketId))
+                {
+                    return BadRequest("Ticket ID is required.");
+                }
 
-            return NotFound(response);
+                var response = await _ticketService.DeleteTicketByIdAsync(ticketId);
+
+                if (response.Succeeded)
+                {
+                    return Ok(response);
+                }
+
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
         }
 
-        //[HttpGet("status/{status}")]
-        //public async Task<ActionResult<ApiResponse<Ticket>>> GetTicketByStatus(Status status)
-        //{
-        //    var response = await _ticketService.GetTicketByStatusAsync(status);
+        [HttpGet("status-by-pagination/{status}")]
+        public async Task<IActionResult> GetTicketsByStatusWithPagination(Status status, int page, int pageSize)
+        {
+            try
+            {
 
-        //    if (response.Succeeded)
-        //    {
-        //        return Ok(response);
-        //    }
+                if (page <= 0 || pageSize <= 0)
+                {
+                    return BadRequest("Invalid page or pageSize values.");
+                }
 
-        //    return NotFound(response);
-        //}
+                var result = await _ticketService.GetTicketsByStatusWithPagination(status, page, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
     }
 }
-
-=======
-
-namespace TicketEase.Controllers
-{
-	[Route("api/[controller]")]
-	[ApiController]
-	public class TicketController : ControllerBase
-	{
-		private readonly ITicketService _ticketService;
-
-		public TicketController(ITicketService ticketService)
-		{
-			_ticketService = ticketService;
-		}
-
-		[HttpGet("user/{userId}")]
-		public async Task<IActionResult> GetTicketsByUserId(string userId, int page, int perPage)
-		{
-
-			var result = await _ticketService.GetTicketByUserId(userId, page, perPage);
-			return Ok(result);
-
-		}
-
-		[HttpGet("project/{projectId}")]
-		public async Task<IActionResult> GetTicketsByProjectId(string projectId, int page, int perPage)
-		{
-			var result = await _ticketService.GetTicketByProjectId(projectId, page, perPage);
-			return Ok(result);
-
-		}
-	}
-}
->>>>>>> 2eb9a4ba010210a0e8797fb925d810e9d9808ef9

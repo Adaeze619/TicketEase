@@ -32,7 +32,7 @@ builder.Services.AddDbContext<TicketEaseDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBoardServices, BoardServices>();
 builder.Services.AddScoped<ITicketService, TicketService>();
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+//builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(MapperProfile));

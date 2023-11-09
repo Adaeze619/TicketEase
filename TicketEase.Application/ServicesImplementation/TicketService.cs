@@ -1,6 +1,7 @@
-﻿using TicketEase.Application.Interfaces.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
-<<<<<<< HEAD
+using TicketEase.Common.Utilities;
 using TicketEase.Domain;
 using TicketEase.Domain.Entities;
 using TicketEase.Domain.Enums;
@@ -10,16 +11,23 @@ namespace TicketEase.Application.ServicesImplementation
     public class TicketService : ITicketService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<TicketService> _logger;
 
-        public TicketService(IUnitOfWork unitOfWork)
+        public TicketService(IUnitOfWork unitOfWork, ILogger<TicketService> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<ApiResponse<bool>> DeleteTicketByIdAsync(string ticketId)
         {
             try
             {
+                if (string.IsNullOrEmpty(ticketId))
+                {
+                    return ApiResponse<bool>.Failed(new List<string> { "Ticket ID is required." });
+                }
+
                 var existingTicket = _unitOfWork.TicketRepository.GetTicketById(ticketId);
 
                 if (existingTicket == null)
@@ -30,87 +38,34 @@ namespace TicketEase.Application.ServicesImplementation
                 _unitOfWork.TicketRepository.DeleteTicket(existingTicket);
                 _unitOfWork.SaveChanges();
 
+                _logger.LogInformation($"Ticket with ID {ticketId} has been deleted successfully.");
+
                 return ApiResponse<bool>.Success(true, "Ticket deleted successfully.", 200);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions
-                return ApiResponse<bool>.Failed(new List<string> { ex.Message });
+                _logger.LogError(ex, "An error occurred while deleting the ticket.");
+
+                return ApiResponse<bool>.Failed(new List<string> { "An error occurred while deleting the ticket." });
             }
         }
 
-        //public async Task<ApiResponse<Ticket>> GetTicketByStatusAsync(Status status)
-        //{
-        //    try
-        //    {
-        //        var tickets = _unitOfWork.TicketRepository.GetTicketsByStatus(status);
-
-        //        if (tickets == null)
-        //        {
-        //            return ApiResponse<Ticket>.Failed(new List<string> { "No tickets found with the specified status." });
-        //        }
-
-        //        return ApiResponse<Ticket>.Success(tickets, "Tickets retrieved successfully.", 200);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Handle any exceptions
-        //        return ApiResponse<Ticket>.Failed(new List<string> { ex.Message });
-        //    }
-        //}
-    }
-=======
-using TicketEase.Common.Utilities;
-using TicketEase.Domain;
-using TicketEase.Domain.Entities;
-
-namespace TicketEase.Application.ServicesImplementation
-{
-	public class TicketService : ITicketService
-	{
-		private readonly IUnitOfWork _unitOfWork;
-
-		public TicketService(IUnitOfWork unitOfWork)
+        public async Task<PageResult<IEnumerable<Ticket>>> GetTicketsByStatusWithPagination(Status status, int page, int pageSize)
         {
-			_unitOfWork = unitOfWork;
-		}
-        public async Task<ApiResponse<PageResult<IEnumerable<Ticket>>>> GetTicketByProjectId(string projectId, int page, int perPage)
-		{
-			var tickets = await _unitOfWork.TicketRepository.GetTicketByProjectId(ticket => ticket.ProjectId == projectId);
+            try
+            {
+                var tickets = await _unitOfWork.TicketRepository.GetTicketsByStatusWithPagination(status, page, pageSize);
 
-			// Use the Pagination class to paginate the data
-			var pagedTickets = await Pagination<Ticket>.GetPager(
-			tickets,
-			perPage,
-			page,
-			ticket => ticket.Title,
-			ticket => ticket.Id.ToString());
+                _logger.LogInformation($"Retrieved {tickets.Data.Count()} tickets with status {status} (Page {page}, Page Size {pageSize}).");
 
+                return tickets;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving tickets with pagination.");
 
-			//return pagedTickets;
-			return new ApiResponse<PageResult<IEnumerable<Ticket>>>(true, "Operation succesful", 200, null, new List<string>());
-		}
-
-		public async Task<ApiResponse<PageResult<IEnumerable<Ticket>>>> GetTicketByUserId(string userId, int page, int perPage)
-		{
-			var tickets = await _unitOfWork.TicketRepository.GetTicketByUserId(ticket => ticket.AppUserId == userId);
-
-			// Use the Paginatioo paginate the dat
-			var pagedTickets = await Pagination<Ticket>.GetPager(
-				tickets,
-				perPage,
-				page,
-				ticket => ticket.Title,
-				ticket => ticket.Id.ToString());
-
-			return new ApiResponse<PageResult<IEnumerable<Ticket>>> (true, "Operation succesful", 200, null, new List<string>());
-			//{
-			//	Status = "Success",
-			//	Data = pagedTickets
-			//};
-
-			//return pagedTickets;
-		}
-	}
->>>>>>> 2eb9a4ba010210a0e8797fb925d810e9d9808ef9
+                throw;
+            }
+        }
+    }
 }
