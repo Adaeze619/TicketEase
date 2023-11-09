@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketEase.Application.DTO;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
@@ -106,6 +107,22 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
+        public ApiResponse<ProjectReponseDto> DeleteAllProjects()
+        {
+            ApiResponse<ProjectReponseDto> response;
+            try
+            {
+                List<Project> projects = _unitOfWork.ProjectRepository.GetProjects();
+                _unitOfWork.ProjectRepository.DeleteAllProject(projects);
+                response = new ApiResponse<ProjectReponseDto>(true, 200, "is successful");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = new ApiResponse<ProjectReponseDto>(false, 500, "failed" + ex.InnerException);
+                return response;
+            }
+        }
     }
 
 

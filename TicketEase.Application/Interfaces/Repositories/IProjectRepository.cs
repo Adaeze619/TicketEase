@@ -9,7 +9,8 @@ namespace TicketEase.Application.Interfaces.Repositories
 		List<Project> GetProjects();
 		void AddProject(Project project);
 		void DeleteProject(Project project);
-		public List<Project> FindProject(Expression<Func<Project, bool>> condition);
+        void DeleteAllProject(List<Project> projects);
+        public List<Project> FindProject(Expression<Func<Project, bool>> condition);
 		Project GetProjectById(string id);
 		void UpdateProject(Project project);
 	}

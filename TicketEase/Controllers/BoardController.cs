@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
 
@@ -25,6 +24,12 @@ namespace TicketEase.Controllers
         public async Task<IActionResult> UpdateBoard(string boardId, [FromBody] BoardRequestDto request)
         {
             return Ok(await _boardServices.UpdateBoardAsync(boardId, request));
+        }
+
+        [HttpDelete("DeleteBoard")]
+        public IActionResult DeleteBoard(string boardId)
+        {
+            return Ok(_boardServices.DeleteAllBoards());
         }
     }
 }

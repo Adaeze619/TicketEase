@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Services;
 
@@ -27,5 +26,10 @@ namespace TicketEase.Controllers
             return Ok(await _projectServices.UpdateProjectAsync(boardId, projectId, projectUpdate));
         }
 
+        [HttpDelete("DeleteProject")]
+        public IActionResult DeleteBoard(string boardId)
+        {
+            return Ok(_projectServices.DeleteAllProjects());
+        }
     }
 }

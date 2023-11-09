@@ -84,5 +84,22 @@ namespace TicketEase.Application.ServicesImplementation
 
             }
         }
+
+        public ApiResponse<BoardResponseDto> DeleteAllBoards()
+        {
+            ApiResponse<BoardResponseDto> response;
+            try
+            {
+                List<Board> boards = _unitOfWork.BoardRepository.GetBoards();
+                _unitOfWork.BoardRepository.DeleteAllBoard(boards);
+                response = new ApiResponse<BoardResponseDto>(true, 200, "is successful");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = new ApiResponse<BoardResponseDto>(false, 500, "failed" + ex.InnerException);
+                return response;
+            }
+        }
     }
 }
