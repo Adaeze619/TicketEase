@@ -9,8 +9,6 @@ namespace TicketEase.Application.ServicesImplementation
 {
     public class UserServices : IUserServices
     {
-
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
@@ -19,7 +17,6 @@ namespace TicketEase.Application.ServicesImplementation
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
 
         public async Task<ApiResponse<AppUserDto>> GetUserByIdAsync(string userId)
         {

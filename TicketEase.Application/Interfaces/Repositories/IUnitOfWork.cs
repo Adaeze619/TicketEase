@@ -15,10 +15,7 @@ namespace TicketEase.Application.Interfaces.Repositories
 		IPaymentRepository PaymentRepository { get; }
 		IProjectRepository ProjectRepository { get; }	
 		ITicketRepository TicketRepository { get; }
-		IUserRepository UserRepository { get; }
-
-
-       
-        int SaveChanges();
+		IUserRepository UserRepository { get; }	   
+		int SaveChanges();
 	}
 }

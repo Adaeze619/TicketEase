@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Application.Interfaces.Services;
-using TicketEase.Application.ServicesImplementation;
 using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
 using TicketEase.Domain.Entities;
 using TicketEase.Mapper;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
-using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,14 +15,7 @@ var configuration = builder.Configuration;
 var services = builder.Services;
 var env = builder.Environment;
 
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IBoardServices, BoardServices>();
-builder.Services.AddScoped<ITicketService, TicketService>();
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddDependencies(builder.Configuration);
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
@@ -48,17 +37,17 @@ builder.Services.AddSwagger();
 builder.Services.AddIdentity<AppUser, IdentityRole>()
 			   .AddEntityFrameworkStores<TicketEaseDbContext>()
 			   .AddDefaultTokenProviders();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+	app.UseDeveloperExceptionPage();
 
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket Ease v1"));
+	app.UseSwagger();
+	app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket Ease v1"));
 }
 using (var scope = app.Services.CreateScope())
 {

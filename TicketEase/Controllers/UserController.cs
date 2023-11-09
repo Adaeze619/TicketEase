@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Domain;
@@ -12,13 +10,11 @@ namespace TicketEase.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
-        private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserServices userServices, IMapper mapper, ILogger<UserController> logger)
+        public UserController(IUserServices userServices, ILogger<UserController> logger)
         {
             _userServices = userServices;
-            _mapper = mapper;
             _logger = logger;
         }
 

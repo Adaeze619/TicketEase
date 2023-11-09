@@ -20,5 +20,6 @@ namespace TicketEase.Application.DTO
         public string CloudinaryPublicId { get; set; }
 
         public bool IsActive { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
