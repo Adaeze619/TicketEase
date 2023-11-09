@@ -8,7 +8,5 @@
         public string CompanyAddress { get; set; }
         public string State { get; set; }
         public DateTime UpdatedDate { get; set; }
-
-
     }
 }
