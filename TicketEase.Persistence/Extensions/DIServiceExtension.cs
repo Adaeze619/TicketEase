@@ -23,12 +23,21 @@ namespace TicketEase.Persistence.Extensions
             services.AddSingleton(emailSettings);
             
 
-            // services.AddTransient<IEmailService, EmailService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+            // services.AddDbContext<DataContext>();
+
+           // services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
-            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProjectServices, ProjectServices>();
             services.AddScoped<IBoardServices, BoardServices>();
             services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IUserServices, UserServices>();
 
 
 

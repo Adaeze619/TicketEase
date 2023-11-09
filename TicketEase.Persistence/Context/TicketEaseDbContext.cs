@@ -39,5 +39,7 @@ namespace TicketEase.Persistence.Context
 			}
 			return await base.SaveChangesAsync(cancellationToken);
 		}
+		
 	}
+    
 }

@@ -7,6 +7,7 @@ namespace TicketEase.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
@@ -16,6 +17,32 @@ namespace TicketEase.Controllers
         {
             _userServices = userServices;
             _logger = logger;
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserById(string userId)
+        {
+            var response = await _userServices.GetUserByIdAsync(userId);
+
+            if (response.Succeeded)
+            {
+                return Ok(response.Data);
+            }
+
+            return StatusCode(response.StatusCode, new { errors = response.Errors });
+        }
+
+        [HttpGet("get-Users-By-Pagination")]
+        public async Task<IActionResult> GetUsersByPagination(int page = 1, int perPage = 3)
+        {
+            var response = await _userServices.GetUsersByPaginationAsync(page, perPage);
+
+            if (response.Succeeded)
+            {
+                return Ok(response.Data);
+            }
+
+            return StatusCode(response.StatusCode, new { errors = response.Errors });
         }
 
         [HttpPut("update/{id}")]
@@ -36,3 +63,4 @@ namespace TicketEase.Controllers
 
     }
 }
+

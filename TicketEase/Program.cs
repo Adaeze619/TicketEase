@@ -17,6 +17,14 @@ var env = builder.Environment;
 
 builder.Services.AddDependencies(builder.Configuration);
 
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IBoardServices, BoardServices>();
+//builder.Services.AddScoped<ITicketService, TicketService>();
+//builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+//builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+//builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddAuthentication();
@@ -25,12 +33,18 @@ builder.Services.AuthenticationConfiguration(configuration);
 // Identity  configuration
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
+//builder.Services.AddTransient<Seeder>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TicketEaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<TicketEaseDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSwagger();
 
@@ -38,6 +52,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 			   .AddEntityFrameworkStores<TicketEaseDbContext>()
 			   .AddDefaultTokenProviders();
 //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddDependencies(configuration);
 
 var app = builder.Build();
 
