@@ -11,12 +11,14 @@ namespace TicketEase.Persistence.Repositories
 	public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
 		private readonly TicketEaseDbContext _ticketEaseDbContext;
-        public GenericRepository(TicketEaseDbContext ticketEaseDbContext)
-        {
-            _ticketEaseDbContext = ticketEaseDbContext;
-        }
+		public GenericRepository(TicketEaseDbContext ticketEaseDbContext)
+		{
+			_ticketEaseDbContext = ticketEaseDbContext;
+		}
 
-        public void Add(T entity)=>_ticketEaseDbContext.Set<T>().Add(entity);
+		public void Add(T entity)=>_ticketEaseDbContext.Set<T>().Add(entity);
+
+		public void DeleteAll(List<T> entity) => _ticketEaseDbContext.Set<T>().RemoveRange(entity);
 
 		public void Delete(T entity)=> _ticketEaseDbContext.Set<T>().Remove(entity);
 
@@ -28,6 +30,7 @@ namespace TicketEase.Persistence.Repositories
 
 		public void Update(T entity)=>_ticketEaseDbContext.Set<T>().Update(entity);
 
-       // Task UpdateEntityAsync<T>(T entity) where T : class;
-    }
+
+		// Task UpdateEntityAsync<T>(T entity) where T : class;
+	}
 }
