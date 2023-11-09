@@ -32,12 +32,16 @@ namespace TicketEase.Persistence.Repositories
 		public void UpdateUser(AppUser appUser) => Update(appUser);
 		public void UpdatePhoto(string id, string imageUrl)
 		{
-			var founderUser = GetUserById(id);
-			if (founderUser != null)
+			var foundUser = GetUserById(id);
+			if (foundUser != null)
 			{ 
-				founderUser.ImageUrl = imageUrl;
-				UpdateUser(founderUser);
+				foundUser.ImageUrl = imageUrl;
+				UpdateUser(foundUser);
 			}
-		}
+            else
+            {
+				throw new Exception("User with ID {id} not found when attempting to update photo");
+            }
+        }
 	}
 }

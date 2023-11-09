@@ -8,7 +8,7 @@ namespace TicketEase.Application.Interfaces.Services
 {
     public interface IManagerServices
     {
-        Task DeactivateManager(string id);
-        Task ActivateManager(string id);
+        string DeactivateManager(string id);
+        string ActivateManager(string id);
     }
 }

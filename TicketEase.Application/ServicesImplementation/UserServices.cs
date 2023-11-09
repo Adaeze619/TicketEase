@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TicketEase.Application.ServicesImplementation
 {
-    internal class UserServices
+    public class UserServices
     {
     }
 }

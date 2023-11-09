@@ -16,15 +16,19 @@ namespace TicketEase.Controllers
         [HttpPut("deactivate/{id}")]
         public IActionResult DeactivateManager(string id)
         {
-            _managerServices.DeactivateManager(id);
+           var response= _managerServices.DeactivateManager(id);
+            if(response== null)
             return NoContent(); // 204 No Content
+            return Ok(response);
         }
 
         [HttpPut("activate/{id}")]
         public IActionResult ActivateManager(string id)
         {
-            _managerServices.ActivateManager(id);
+            var response = _managerServices.ActivateManager(id);
+            if(response==null)
             return NoContent();
+            return Ok(response);
         }
     }
 }
