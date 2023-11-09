@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
+using TicketEase.Common.Utilities;
 using TicketEase.Domain;
 using TicketEase.Domain.Entities;
 
@@ -48,35 +49,29 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        //public ApiResponse<List<Manager>> GetAllManagerByPagination(int page, int perPage, string user)
-        //{
-        //    try
-        //    {
-        //        perPage = perPage <= 0 ? 10 : perPage;
-        //        page = page <= 0 ? 1 : page;
+        public async Task<ApiResponse<PageResult<IEnumerable<Manager>>>> GetAllManagerByPagination(int page, int perPage)
+        {
+            try
+            {
+                perPage = perPage <= 0 ? 10 : perPage;
+                page = page <= 0 ? 1 : page;
+                var managers =  _unitOfWork.ManagerRepository.GetAll();
+                var pagedManaagers = await Pagination<Manager>.GetPager(
+                    managers,
+                    perPage,
+                    page,
+                    manager => manager.CompanyName,
+                    manager => manager.BusinessEmail);
 
+                return new ApiResponse<PageResult<IEnumerable<Manager>>>(true, "Operation succesful", 200, null, new List<string>());
 
-        //        IEnumerable<Manager> allManagers = _unitOfWork.ManagerRepository.GetAll();
-
-        //        Func<Manager, string> nameSelector = manager => manager.CompanyName;
-        //        Func<Manager, string> emailSelector = manager => manager.BusinessEmail;
-
-        //        var paginationResult = Pagination<Manager>.GetPager(allManagers, perPage, page, nameSelector, emailSelector);
-
-        //        var pagedManagers = paginationResult.Data.ToList();
-        //        var totalPageCount = paginationResult.TotalPageCount;
-        //        var currentPage = paginationResult.CurrentPage;
-
-        //        var responseMessage = $"Page {currentPage} of {totalPageCount}";
-
-        //        return ApiResponse<List<Manager>>.Success(pagedManagers, responseMessage, 200);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error occurred while retrieving paged managers");
-        //        return ApiResponse<List<Manager>>.Failed(new List<string> { "Error: " + ex.Message });
-        //    }
-        //}
+                }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving paged managers");
+                return ApiResponse<PageResult<IEnumerable<Manager>>>.Failed(new List<string> { "Error: " + ex.Message });
+            }
+        }
 
         public ApiResponse<EditManagerDto> GetManagerById(string userId)
         {

@@ -76,5 +76,21 @@ namespace TicketEase.Controllers
         }
 
 
+        [HttpGet("GetAll")]
+        public IActionResult GetAllManage(int page, int perPage)
+        {
+            try
+            {
+                var response = _managerService.GetAllManagerByPagination(page, perPage);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal Server Error" });
+            }
+        }
+        
+
+
     }
 }

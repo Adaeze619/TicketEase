@@ -6,7 +6,7 @@ namespace TicketEase.Mapper
 {
     public class MapperProfile : Profile
     {
-        protected MapperProfile()
+        public MapperProfile()
         {
             CreateMap<Manager, EditManagerDto>().ReverseMap();
             CreateMap<BoardRequestDto, Board>();
