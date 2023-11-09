@@ -9,8 +9,8 @@ namespace TicketEase.Application.DTO
         public Status Status { get; set; }
         public Priority Priority { get; set; }
         public DateTime ResolvedAt { get; set; }
-        //public string AssignedTo { get; set; }
-        //public string AppUserId { get; set; }
-        //public string ProjectId { get; set; }
+        public string AssignedTo { get; set; }
+        public string AppUserId { get; set; }
+        public string ProjectId { get; set; }
     }
 }
