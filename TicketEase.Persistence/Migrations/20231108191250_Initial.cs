@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketEase.Persistence.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,6 +38,31 @@ namespace TicketEase.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boards", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IdentityUser",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,6 +160,11 @@ namespace TicketEase.Persistence.Migrations
                     CloudinaryPublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VerificationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResetTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    VerifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -302,6 +332,36 @@ namespace TicketEase.Persistence.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "5e14eb3e-2ddd-4384-a559-19c046a9d646", "7b97bbb1-410f-4114-9157-6aa462837c16", "Manager", "Manager" },
+                    { "d915ed17-2eb3-46db-9989-3bdf16b1baa3", "e7820f67-cd01-4bab-9162-a9b1d9be8aef", "SuperAdmin", "SuperAdmin" },
+                    { "faad1761-976b-4b5c-94ae-51e38dc60be2", "a74d0c59-9977-49c4-a652-d1e0085fb56a", "User", "User" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "IdentityUser",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "10aed46c-84b0-4568-a49e-8c6f4ed382a3", 0, "f44facf4-9ae6-41b4-8a48-14f47e2073d2", "superadmin@library.com", false, false, null, "SUPERADMIN@LIBRARY.COM", "SUPERADMIN@LIBRARY.COM", "AQAAAAEAACcQAAAAEJXUTPf80iIaATJR7PU8pmEODbD4FY/vC9Z/ZMsFMpaoNh1QB9eriuGFjb2ALsSBnA==", null, false, "d729b4d6-827a-4fc2-b600-ef24339b8058", false, "superadmin@library.com" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "5e14eb3e-2ddd-4384-a559-19c046a9d646", "10aed46c-84b0-4568-a49e-8c6f4ed382a3" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "d915ed17-2eb3-46db-9989-3bdf16b1baa3", "10aed46c-84b0-4568-a49e-8c6f4ed382a3" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "faad1761-976b-4b5c-94ae-51e38dc60be2", "10aed46c-84b0-4568-a49e-8c6f4ed382a3" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -386,6 +446,9 @@ namespace TicketEase.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "IdentityUser");
 
             migrationBuilder.DropTable(
                 name: "Payments");

@@ -1,5 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using TicketEase.Application.Interfaces.Repositories;
+using TicketEase.Application.Interfaces.Services;
+using TicketEase.Application.ServicesImplementation;
 using TicketEase.Configurations;
+using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +19,7 @@ var env = builder.Environment;
 // Add services to the container.
 //builder.Services.AddHttpClient();
 //builder.Services.AddCloudinaryService(config);
-//builder.Services.AddMailService(config);
-
-
-
+builder.Services.AddMailService(builder.Configuration);
 
 // Authentication configuration
 builder.Services.AddAuthentication();
@@ -25,7 +28,7 @@ builder.Services.AuthenticationConfiguration(configuration);
 // Identity  configuration
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
-
+builder.Services.AddLogging(builder => builder.AddConsole());
 
 
 
@@ -34,6 +37,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwagger();
+
+builder.Services.AddDbContext<TicketEaseDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketEase"));
+});
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<JwtTokenGeneratorService>();
+//builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 var app = builder.Build();
 
