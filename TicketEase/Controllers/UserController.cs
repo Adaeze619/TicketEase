@@ -6,8 +6,7 @@ using TicketEase.Domain;
 namespace TicketEase.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [Route("api/users")]
+    [ApiController] 
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
