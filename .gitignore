@@ -246,3 +246,5 @@ paket-files/
 
 appsettings.Development.json
 TicketEase/*.txt
+/TicketEase/appsettings.json
+/.gitignore
