@@ -123,7 +123,7 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page)
+        public async Task<ApiResponse<PageResult<IEnumerable<Project>>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page)
         {
             try
             {
@@ -131,15 +131,15 @@ namespace TicketEase.Application.ServicesImplementation
 
                 var boardProjects = projects.Where(project => project.BoardId == boardId).ToList();
 
-                var paginationResponse = Pagination<Project>.GetPager(boardProjects, perPage, page, p => p.Title, p => p.Id);
+                var paginationResponse = await Pagination<Project>.GetPager(boardProjects, perPage, page, p => p.Title, p => p.Id);
 
-                return paginationResponse;
+                return ApiResponse<PageResult<IEnumerable<Project>>>.Success(paginationResponse, "Successfully retrieved Projects", 200 );
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while loading the project");
 
-                return Task.FromException<PageResult<IEnumerable<Project>>>(ex);
+                return ApiResponse<PageResult<IEnumerable<Project>>>.Failed(false, "Error occured whiile loading projects", 500, new List<string> {ex.Message});
             }
         }
     }

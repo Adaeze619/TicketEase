@@ -29,14 +29,11 @@ namespace TicketEase.Controllers
         }
 
         [HttpGet("{projectId}")]
-        public IActionResult GetProjectById(string projectId) => Ok(_projectServices.GetProjectByIdAsync(projectId));
+        public async Task<IActionResult> GetProjectById(string projectId) => Ok( await _projectServices.GetProjectByIdAsync(projectId));
 
         [HttpGet("GetProjectsByBoardId")]
-        public Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardId(string boardId, int perPage, int page)
-        {
-            var projects = _projectServices.GetProjectsByBoardIdAsync(boardId, perPage, page);
+        public async Task<IActionResult> GetProjectsByBoardId(string boardId, int perPage, int page)
+            => Ok(await _projectServices.GetProjectsByBoardIdAsync(boardId, perPage, page));
 
-            return projects;
-        }
     }
 }

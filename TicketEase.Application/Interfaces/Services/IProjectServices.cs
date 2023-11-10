@@ -10,6 +10,6 @@ namespace TicketEase.Application.Interfaces.Services
         Task<ApiResponse<ProjectReponseDto>> CreateProjectAsync(string boardId, ProjectRequestDto project);
         Task<ApiResponse<ProjectReponseDto>> UpdateProjectAsync(string boardId, string projectId, UpdateProjectRequestDto projectUpdate);
         Task<ApiResponse<Project>> GetProjectByIdAsync(string projectId);
-        Task<PageResult<IEnumerable<Project>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page);
+        Task<ApiResponse<PageResult<IEnumerable<Project>>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page);
     }
 }
