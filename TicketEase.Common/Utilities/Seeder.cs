@@ -52,6 +52,5 @@ namespace TicketEase.Common.Utilities
 				}
 			}
 		}
-
 	}
 }

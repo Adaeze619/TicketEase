@@ -43,7 +43,7 @@ namespace TicketEase.Persistence.Extensions
             
 
             services.AddDbContext<TicketEaseDbContext>(options =>
-            options.UseSqlServer(config.GetConnectionString("TicketConnectionString")));
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<IManagerServices, ManagerServices>();
            
         }
