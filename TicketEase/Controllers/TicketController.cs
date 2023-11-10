@@ -27,7 +27,7 @@ namespace TicketEase.Controllers
         }
 
 
-        [HttpPut("edit-ticket/{Id}")]
+        [HttpPut("edit-ticket/{ticketId}")]
         public IActionResult EditTicket(string ticketId, [FromBody] UpdateTicketRequestDto updatedTicketRequestDTO)
         {
             var response = _ticketService.EditTicket(ticketId, updatedTicketRequestDTO);
