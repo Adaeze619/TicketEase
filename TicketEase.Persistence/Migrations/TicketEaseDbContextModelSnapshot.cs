@@ -204,7 +204,7 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("ManagerAppUserId")
+                    b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NormalizedEmail")
@@ -254,7 +254,7 @@ namespace TicketEase.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManagerAppUserId");
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -329,7 +329,7 @@ namespace TicketEase.Persistence.Migrations
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Manager", b =>
                 {
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessEmail")
@@ -353,7 +353,7 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AppUserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Managers");
                 });
@@ -536,11 +536,9 @@ namespace TicketEase.Persistence.Migrations
 
             modelBuilder.Entity("TicketEase.Domain.Entities.AppUser", b =>
                 {
-                    b.HasOne("TicketEase.Domain.Entities.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerAppUserId");
-
-                    b.Navigation("Manager");
+                    b.HasOne("TicketEase.Domain.Entities.Manager", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ManagerId");
                 });
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Comment", b =>
@@ -576,6 +574,11 @@ namespace TicketEase.Persistence.Migrations
             modelBuilder.Entity("TicketEase.Domain.Entities.Board", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("TicketEase.Domain.Entities.Manager", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Project", b =>
