@@ -1,13 +1,10 @@
-﻿
-
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Domain.Entities;
+﻿using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Persistence.Context;
 
 namespace TicketEase.Persistence.Repositories
 {
 
-	public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
 	{
 		private readonly TicketEaseDbContext _ticketEaseDbContext;
 		public UnitOfWork(TicketEaseDbContext ticketEaseDbContext)
@@ -35,7 +32,6 @@ namespace TicketEase.Persistence.Repositories
 
 		public IUserRepository UserRepository { get; private set; }
 
-
 		public void Dispose()
 		{
 			_ticketEaseDbContext.Dispose();
@@ -46,4 +42,6 @@ namespace TicketEase.Persistence.Repositories
             return _ticketEaseDbContext.SaveChanges();
         }
     }
+
 }
+

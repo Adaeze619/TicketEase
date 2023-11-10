@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
 using TicketEase.Domain.Entities;
+using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Repositories;
 
 namespace TicketEase.Persistence.Extensions
@@ -12,28 +14,39 @@ namespace TicketEase.Persistence.Extensions
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration config)
         {
-
             //Bind CloudinarySettings from configuration 
             var cloudinarySettings = new CloudinarySetting();
             config.GetSection("CloudinarySettings").Bind(cloudinarySettings);
             services.AddSingleton(cloudinarySettings);
-
             var emailSettings = new EmailSettings();
             config.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);
+            
 
 
 
-
-           // services.AddDbContext<DataContext>();
+            // services.AddDbContext<DataContext>();
 
            // services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProjectServices, ProjectServices>();
+            services.AddScoped<IBoardServices, BoardServices>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-
-
-
+            services.AddDbContext<TicketEaseDbContext>(options =>
+<<<<<<< Updated upstream
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+=======
+            options.UseSqlServer(config.GetConnectionString("TicketConnectionString")));
+>>>>>>> Stashed changes
+            services.AddScoped<IManagerServices, ManagerServices>();
         }
     }
 }
