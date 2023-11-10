@@ -21,7 +21,7 @@ namespace TicketEase.Application.ServicesImplementation
             _mapper = mapper;
             _logger = logger;
         }
-
+         
         public ApiResponse<bool> AddTicket(TicketDto ticketDTO)
         {
             try
@@ -67,40 +67,73 @@ namespace TicketEase.Application.ServicesImplementation
                 return ApiResponse<bool>.Failed(new List<string> { "Error: " + ex.Message });
             }
         }
-        public async Task<ApiResponse<PageResult<IEnumerable<Ticket>>>> GetTicketByProjectId(string projectId, int page, int perPage)
+		
+
+		public async Task<ApiResponse<PageResult<IEnumerable<Ticket>>>> GetTicketByProjectId(string projectId, int page, int perPage)
 		{
-			var tickets = await _unitOfWork.TicketRepository.GetTicketByProjectId(ticket => ticket.ProjectId == projectId);
-			var pagedTickets = await Pagination<Ticket>.GetPager(
-			tickets,
-			perPage,
-			page,
-			ticket => ticket.Title,
-			ticket => ticket.Id.ToString());
+			try
+			{
 
+				var matchingTickets = await _unitOfWork.TicketRepository
+					.GetTicketByProjectId(ticket => ticket.ProjectId == projectId);
 
-			//return pagedTickets;
-			return new ApiResponse<PageResult<IEnumerable<Ticket>>>(true, "Operation succesful", 200, null, new List<string>());
+				if (matchingTickets == null)
+				{
+					return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+						false, "No tickets found for the given project", 404, null, null);
+				}
+
+				var pagedTickets = await Pagination<Ticket>.GetPager(
+					matchingTickets,
+					perPage,
+					page,
+					ticket => ticket.Title,
+					ticket => ticket.Id.ToString());
+
+				return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+					true, "Operation successful", 200, pagedTickets, new List<string>());
+			}
+			catch (Exception ex)
+			{
+
+				return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+					false, "Error occurred", 500, null, new List<string> { ex.Message });
+			}
 		}
+
 
 		public async Task<ApiResponse<PageResult<IEnumerable<Ticket>>>> GetTicketByUserId(string userId, int page, int perPage)
 		{
-			var tickets = await _unitOfWork.TicketRepository.GetTicketByUserId(ticket => ticket.AppUserId == userId);
+			try
+			{
+	
+				var userTickets = await _unitOfWork.TicketRepository
+					.GetTicketByUserId(ticket => ticket.AppUserId == userId);
 
-			// Use the Paginatioo paginate the dat
-			var pagedTickets = await Pagination<Ticket>.GetPager(
-				tickets,
-				perPage,
-				page,
-				ticket => ticket.Title,
-				ticket => ticket.Id.ToString());
+				if (userTickets == null || !userTickets.Any())
+				{
+					return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+						false, "No tickets found for the given user", 404, null, null);
+				}
 
-			return new ApiResponse<PageResult<IEnumerable<Ticket>>> (true, "Operation succesful", 200, null, new List<string>());
-			//{
-			//	Status = "Success",
-			//	Data = pagedTickets
-			//};
+				var pagedUserTickets = await Pagination<Ticket>.GetPager(
+					userTickets,
+					perPage,
+					page,
+					ticket => ticket.Title,
+					ticket => ticket.Id.ToString());
 
-			//return pagedTickets;
+				return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+					true, "Operation successful", 200, pagedUserTickets, new List<string>());
+			}
+			catch (Exception ex)
+			{
+		
+				return new ApiResponse<PageResult<IEnumerable<Ticket>>>(
+					false, "Error occurred", 500, null, new List<string> { ex.Message });
+			}
 		}
+
+
 	}
 }
