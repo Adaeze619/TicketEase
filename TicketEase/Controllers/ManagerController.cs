@@ -1,26 +1,57 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using TicketEase.Application;
+using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
+using TicketEase.Application.ServicesImplementation;
+using TicketEase.Domain;
 
 namespace TicketEase.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/managers")]
     [ApiController]
     public class ManagerController : ControllerBase
     {
-        private readonly IManagerService managerService;
-
-        public ManagerController(IManagerService managerService)
+        private readonly IManagerServices _managerService;
+        public ManagerController(IManagerServices managerService)
         {
-            this.managerService = managerService;
+            _managerService = managerService;
+        }      
+        [HttpGet("GetById")]
+        public IActionResult GetManagersById(string id)
+        {
+            var response = _managerService.GetManagerById(id);
+            return Ok(response);       
+        }
+        [HttpPut("Edit")]
+        public IActionResult EditManager(string id, EditManagerDto managerDTO)
+        {          
+            var response = _managerService.EditManager(id, managerDTO);
+            return Ok(response);            
+        }
+        [HttpGet("GetAll")]
+        public IActionResult GetAllManage(int page, int perPage)
+        {          
+            var response = _managerService.GetAllManagerByPagination(page, perPage);
+            return Ok(response);           
         }
 
         [HttpPost("sendManagerInformation")]
-        public async Task<IActionResult> SendManagerInformation([FromBody] ManagerInfoCreateDto managerDto)
-        {
-                return Ok(await managerService.SendManagerInformationToAdminAsync(managerDto));           
+        public async Task<IActionResult> SendManagerInformation(ManagerInfoCreateDto managerInfoCreateDto)
+        {    
+
+                var response = await _managerService.SendManagerInformationToAdminAsync(managerInfoCreateDto);
+
+                return Ok(response);            
+        }
+
+        [HttpPut("updateProfile/{managerId}")]
+        public async Task<IActionResult> UpdateManagerProfile(string managerId, [FromBody] UpdateManagerDto updateManagerDto)
+        {           
+
+            var result = await _managerService.UpdateManagerProfileAsync(managerId, updateManagerDto);
+            return Ok(new ApiResponse<bool>(true, "User updated successfully.", 200, true, null));              
+           
         }
     }
 }

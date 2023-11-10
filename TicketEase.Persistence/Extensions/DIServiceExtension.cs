@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
 using TicketEase.Domain.Entities;
+using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Repositories;
 
 namespace TicketEase.Persistence.Extensions
@@ -12,12 +14,10 @@ namespace TicketEase.Persistence.Extensions
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration config)
         {
-
             //Bind CloudinarySettings from configuration 
             var cloudinarySettings = new CloudinarySetting();
             config.GetSection("CloudinarySettings").Bind(cloudinarySettings);
             services.AddSingleton(cloudinarySettings);
-
             var emailSettings = new EmailSettings();
             config.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);
@@ -38,11 +38,14 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IUserServices, UserServices>();
-            services.AddScoped<IManagerService, ManagerService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IEmailServices, EmailServices>();
+            
 
-
-
-
+            services.AddDbContext<TicketEaseDbContext>(options =>
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IManagerServices, ManagerServices>();
+           
         }
     }
 }
