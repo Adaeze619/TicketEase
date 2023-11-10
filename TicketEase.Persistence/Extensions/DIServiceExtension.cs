@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
 using TicketEase.Domain.Entities;
+using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Repositories;
 
 namespace TicketEase.Persistence.Extensions
@@ -32,7 +34,11 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IManagerServices, ManagerServices>();
             services.AddScoped<IUserServices, UserServices>();
-
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IEmailServices, EmailServices>();
+            services.AddDbContext<TicketEaseDbContext>(options =>
+            options.UseSqlServer(config.GetConnectionString("TicketConnectionString")));
+            services.AddScoped<IManagerServices, ManagerServices>();
         }
     }
 }

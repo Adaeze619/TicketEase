@@ -8,6 +8,7 @@ using TicketEase.Domain.Entities;
 using TicketEase.Mapper;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +24,8 @@ var env = builder.Environment;
 //builder.Services.AddMailService(config);
 
 builder.Services.AddDependencies(builder.Configuration);
-
 // Authentication configuration
+//builder.Services.AddAutoMapper(typeof(TicketEase.Mapper.MapperProfile));
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
 
@@ -43,19 +44,21 @@ builder.Services.AddSingleton(provider =>
 
     return new Cloudinary(cloudinaryAccount);
 });
+//builder.Services.AddTransient<Seeder>();
+builder.Services.AddMailService(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketEaseDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
 builder.Services.AddSwagger();
@@ -63,6 +66,12 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddIdentity<AppUser, IdentityRole>()
                .AddEntityFrameworkStores<TicketEaseDbContext>()
                .AddDefaultTokenProviders();
+
+//builder.Services.AddIdentity<AppUser, IdentityRole>()
+//			   .AddEntityFrameworkStores<TicketEaseDbContext>()
+//			   .AddDefaultTokenProviders();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddDependencies(configuration);
 
 var app = builder.Build();
 
