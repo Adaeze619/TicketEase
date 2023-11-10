@@ -18,6 +18,8 @@ namespace TicketEase.Persistence.Repositories
             TicketRepository = new TicketRepository(_ticketEaseDbContext);
             UserRepository = new UserRepository(_ticketEaseDbContext);
         }
+        
+        
         public IBoardRepository BoardRepository { get; private set; }
 
         public ICommentRepository CommentRepository { get; private set; }
@@ -37,11 +39,11 @@ namespace TicketEase.Persistence.Repositories
             _ticketEaseDbContext.Dispose();
         }
 
-        public int SaveChanges()
-        {
-            return _ticketEaseDbContext.SaveChanges();
-        }
-    }
+		public int SaveChanges()
+		{
+			return _ticketEaseDbContext.SaveChanges();
+		}
+	}
 
 }
 
