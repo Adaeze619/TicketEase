@@ -12,21 +12,14 @@ namespace TicketEase.Persistence.Extensions
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration config)
         {
-
             //Bind CloudinarySettings from configuration 
             var cloudinarySettings = new CloudinarySetting();
             config.GetSection("CloudinarySettings").Bind(cloudinarySettings);
             services.AddSingleton(cloudinarySettings);
-
             var emailSettings = new EmailSettings();
             config.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);
-            
-
-
-
             // services.AddDbContext<DataContext>();
-
            // services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
@@ -37,10 +30,8 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IManagerServices, ManagerServices>();
             services.AddScoped<IUserServices, UserServices>();
-
-
-
 
         }
     }
