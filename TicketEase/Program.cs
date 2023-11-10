@@ -19,13 +19,7 @@ var services = builder.Services;
 var env = builder.Environment;
 
 // Add services to the container.
-//builder.Services.AddHttpClient();
-//builder.Services.AddCloudinaryService(config);
-//builder.Services.AddMailService(config);
-
 builder.Services.AddDependencies(builder.Configuration);
-// Authentication configuration
-//builder.Services.AddAutoMapper(typeof(TicketEase.Mapper.MapperProfile));
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
 
@@ -44,21 +38,13 @@ builder.Services.AddSingleton(provider =>
 
     return new Cloudinary(cloudinaryAccount);
 });
-//builder.Services.AddTransient<Seeder>();
 builder.Services.AddMailService(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketEaseDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
 builder.Services.AddSwagger();
@@ -67,11 +53,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
                .AddEntityFrameworkStores<TicketEaseDbContext>()
                .AddDefaultTokenProviders();
 
-//builder.Services.AddIdentity<AppUser, IdentityRole>()
-//			   .AddEntityFrameworkStores<TicketEaseDbContext>()
-//			   .AddDefaultTokenProviders();
-//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddDependencies(configuration);
 
 var app = builder.Build();
 
