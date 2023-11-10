@@ -1,4 +1,6 @@
-﻿namespace TicketEase.Application.DTO
+﻿using TicketEase.Domain.Entities;
+
+namespace TicketEase.Application.DTO
 {
     public class BoardResponseDto
     {

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Domain.Entities;
-
-namespace TicketEase.Application.Interfaces.Repositories
+﻿namespace TicketEase.Application.Interfaces.Repositories
 {
-	public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
 	{
 		IBoardRepository BoardRepository { get; }
 		ICommentRepository CommentRepository { get; }
@@ -15,10 +8,7 @@ namespace TicketEase.Application.Interfaces.Repositories
 		IPaymentRepository PaymentRepository { get; }
 		IProjectRepository ProjectRepository { get; }	
 		ITicketRepository TicketRepository { get; }
-		IUserRepository UserRepository { get; }
-
-
-       
-        int SaveChanges();
+		IUserRepository UserRepository { get; }	   
+		int SaveChanges();
 	}
 }
