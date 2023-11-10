@@ -12,14 +12,14 @@ using TicketEase.Persistence.Context;
 namespace TicketEase.Persistence.Migrations
 {
     [DbContext(typeof(TicketEaseDbContext))]
-    [Migration("20231106222154_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231110091623_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.24")
+                .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -191,6 +191,9 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -203,7 +206,7 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("ManagerAppUserId")
+                    b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NormalizedEmail")
@@ -217,11 +220,17 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -239,9 +248,15 @@ namespace TicketEase.Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VerifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ManagerAppUserId");
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -316,7 +331,7 @@ namespace TicketEase.Persistence.Migrations
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Manager", b =>
                 {
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessEmail")
@@ -340,7 +355,7 @@ namespace TicketEase.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AppUserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Managers");
                 });
@@ -523,11 +538,9 @@ namespace TicketEase.Persistence.Migrations
 
             modelBuilder.Entity("TicketEase.Domain.Entities.AppUser", b =>
                 {
-                    b.HasOne("TicketEase.Domain.Entities.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerAppUserId");
-
-                    b.Navigation("Manager");
+                    b.HasOne("TicketEase.Domain.Entities.Manager", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ManagerId");
                 });
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Comment", b =>
@@ -563,6 +576,11 @@ namespace TicketEase.Persistence.Migrations
             modelBuilder.Entity("TicketEase.Domain.Entities.Board", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("TicketEase.Domain.Entities.Manager", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TicketEase.Domain.Entities.Project", b =>

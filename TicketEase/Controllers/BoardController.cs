@@ -17,12 +17,12 @@ namespace TicketEase.Controllers
 
         [Authorize(Roles ="Admin,Manager")]
         [HttpPost("AddBoard")]
-        public async Task<IActionResult> AddBoard([FromBody] BoardRequestDto request) 
+        public async Task<IActionResult> AddBoard([FromBody] BoardRequestDto request)
             =>  Ok(await _boardServices.AddBoardAsync(request));
 
         [Authorize(Roles = "Admin,Manager")]
         [HttpPut("UpdateBoard/{boardId}")]
-        public async Task<IActionResult> UpdateBoard(string boardId, [FromBody] BoardRequestDto request) 
+        public async Task<IActionResult> UpdateBoard(string boardId, [FromBody] BoardRequestDto request)
             => Ok(await _boardServices.UpdateBoardAsync(boardId, request));
     }
 }

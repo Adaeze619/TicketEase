@@ -54,6 +54,7 @@ namespace TicketEase.Application.ServicesImplementation
 
         public async Task<ApiResponse<BoardResponseDto>> UpdateBoardAsync(string boardId, BoardRequestDto boardRequestDto)
         {
+            //ApiResponse<BoardResponseDto> response;
             try
             {
                 var existingBoard = _unitOfWork.BoardRepository.GetBoardById(boardId);

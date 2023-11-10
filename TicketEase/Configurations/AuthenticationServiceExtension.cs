@@ -11,12 +11,13 @@ namespace TicketEase.Persistence.Extensions
             var secretKey = configuration.GetSection("JwtSettings : Secret");
             var TokenParameters = new TokenValidationParameters
             {
+
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidAudience = configuration["JwtSettings : ValidAudience"],
-                ValidIssuer = configuration["JwtSettings : ValidIssuer"],
+                ValidAudience = configuration["JwtSettings:ValidAudience"],
+                ValidIssuer = configuration["JwtSettings:ValidIssuer"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding
                     .UTF8.GetBytes("SecretKey")),
                 ClockSkew = TimeSpan.Zero
