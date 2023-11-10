@@ -5,6 +5,7 @@ using TicketEase.Configurations;
 using TicketEase.Domain.Entities;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,9 +35,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TicketEaseDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("TicketEase")));
-
+//builder.Services.AddDbContext<TicketEaseDbContext>(options => 
+//options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
 builder.Services.AddSwagger();
 
 //builder.Services.AddIdentity<AppUser, IdentityRole>()
