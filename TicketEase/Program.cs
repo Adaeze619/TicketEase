@@ -35,12 +35,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketEaseDbContext>(options => 
-<<<<<<< Updated upstream
-options.UseSqlServer(builder.Configuration.GetConnectionString("TicketEase")));
-=======
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
->>>>>>> Stashed changes
-
 builder.Services.AddSwagger();
 
 //builder.Services.AddIdentity<AppUser, IdentityRole>()

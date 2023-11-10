@@ -41,11 +41,7 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddDbContext<TicketEaseDbContext>(options =>
-<<<<<<< Updated upstream
-            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
-=======
             options.UseSqlServer(config.GetConnectionString("TicketConnectionString")));
->>>>>>> Stashed changes
             services.AddScoped<IManagerServices, ManagerServices>();
         }
     }
