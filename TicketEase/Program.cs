@@ -29,13 +29,7 @@ builder.Services.AddMailService(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-<<<<<<< HEAD
-builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("TicketEaseCS")));
-=======
-//builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
->>>>>>> develop
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
