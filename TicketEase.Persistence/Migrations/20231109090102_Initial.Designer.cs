@@ -12,11 +12,7 @@ using TicketEase.Persistence.Context;
 namespace TicketEase.Persistence.Migrations
 {
     [DbContext(typeof(TicketEaseDbContext))]
-<<<<<<<< HEAD:TicketEase.Persistence/Migrations/20231108191250_Initial.Designer.cs
-    [Migration("20231108191250_Initial")]
-========
-    [Migration("20231108223604_Initial")]
->>>>>>>> 82cd00eff8fa092f92ccd1f5cf3af4bb2e90c670:TicketEase.Persistence/Migrations/20231108223604_Initial.Designer.cs
+    [Migration("20231109090102_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,29 +49,6 @@ namespace TicketEase.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "5e14eb3e-2ddd-4384-a559-19c046a9d646",
-                            ConcurrencyStamp = "7b97bbb1-410f-4114-9157-6aa462837c16",
-                            Name = "Manager",
-                            NormalizedName = "Manager"
-                        },
-                        new
-                        {
-                            Id = "d915ed17-2eb3-46db-9989-3bdf16b1baa3",
-                            ConcurrencyStamp = "e7820f67-cd01-4bab-9162-a9b1d9be8aef",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = "faad1761-976b-4b5c-94ae-51e38dc60be2",
-                            ConcurrencyStamp = "a74d0c59-9977-49c4-a652-d1e0085fb56a",
-                            Name = "User",
-                            NormalizedName = "User"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -101,76 +74,6 @@ namespace TicketEase.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "10aed46c-84b0-4568-a49e-8c6f4ed382a3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f44facf4-9ae6-41b4-8a48-14f47e2073d2",
-                            Email = "superadmin@library.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SUPERADMIN@LIBRARY.COM",
-                            NormalizedUserName = "SUPERADMIN@LIBRARY.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJXUTPf80iIaATJR7PU8pmEODbD4FY/vC9Z/ZMsFMpaoNh1QB9eriuGFjb2ALsSBnA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "d729b4d6-827a-4fc2-b600-ef24339b8058",
-                            TwoFactorEnabled = false,
-                            UserName = "superadmin@library.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -233,23 +136,6 @@ namespace TicketEase.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "10aed46c-84b0-4568-a49e-8c6f4ed382a3",
-                            RoleId = "5e14eb3e-2ddd-4384-a559-19c046a9d646"
-                        },
-                        new
-                        {
-                            UserId = "10aed46c-84b0-4568-a49e-8c6f4ed382a3",
-                            RoleId = "d915ed17-2eb3-46db-9989-3bdf16b1baa3"
-                        },
-                        new
-                        {
-                            UserId = "10aed46c-84b0-4568-a49e-8c6f4ed382a3",
-                            RoleId = "faad1761-976b-4b5c-94ae-51e38dc60be2"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

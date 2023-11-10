@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
@@ -14,7 +13,7 @@ namespace TicketEase.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly UserManager<AppUser> _userManager;
-
+       
         public AuthenticationController(IAuthenticationService authenticationService, UserManager<AppUser> userManager)
         {
             _authenticationService = authenticationService;
@@ -22,14 +21,14 @@ namespace TicketEase.Controllers
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ApiResponse<string>(false, "Invalid model state.", 400, null, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
             }
 
-            var response = await _authenticationService.ForgotPasswordAsync(email);
+            var response = await _authenticationService.ForgotPasswordAsync(model.Email);
 
             if (response.Succeeded)
             {
