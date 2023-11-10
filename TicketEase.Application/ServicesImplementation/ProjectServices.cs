@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Application.DTO;
 using TicketEase.Application.DTO.Project;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
+using TicketEase.Common.Utilities;
 using TicketEase.Domain;
 using TicketEase.Domain.Entities;
 
@@ -106,8 +101,47 @@ namespace TicketEase.Application.ServicesImplementation
                 _logger.LogError(ex, "Error occurred while updating a project");
                 return ApiResponse<ProjectReponseDto>.Failed(false,"Error occurred while updating a project", 500, new List<string> { ex.Message });
             }
+
+
+
+
         }
 
+        public async Task<ApiResponse<Project>> GetProjectByIdAsync(string projectId)
+        {
+            try
+            {
+                var project = _unitOfWork.ProjectRepository.GetProjectById(projectId);
+                _logger.LogInformation("Project loaded successfully");
+
+                return ApiResponse<Project>.Success(project, "Project loaded successfully", 200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while loading the project");
+
+                return ApiResponse<Project>.Failed(false, "Error occurred while loading the project", 500, new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<PageResult<IEnumerable<Project>>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page)
+        {
+            try
+            {
+                var projects = _unitOfWork.ProjectRepository.GetAll();
+
+                var boardProjects = projects.Where(project => project.BoardId == boardId).ToList();
+                var paginationResponse = await Pagination<Project>.GetPager(boardProjects, perPage, page, p => p.Title, p => p.Id);
+
+                return ApiResponse<PageResult<IEnumerable<Project>>>.Success(paginationResponse, "Successfully retrieved Projects", 200 );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while loading the project");
+
+                return ApiResponse<PageResult<IEnumerable<Project>>>.Failed(false, "Error occured whiile loading projects", 500, new List<string> {ex.Message});
+            }
+        }
         public ApiResponse<ProjectReponseDto> DeleteAllProjects()
         {
             ApiResponse<ProjectReponseDto> response;
@@ -115,7 +149,7 @@ namespace TicketEase.Application.ServicesImplementation
             {
                 List<Project> projects = _unitOfWork.ProjectRepository.GetProjects();
                 _unitOfWork.ProjectRepository.DeleteAllProject(projects);
-                response = new ApiResponse<ProjectReponseDto>(true, 200, "All Projects deleted successfully");
+                response = new ApiResponse<ProjectReponseDto>(true, StatusCodes.Status200OK, "All Projects deleted successfully");
                 _unitOfWork.SaveChanges();
                 return response;
             }
@@ -126,6 +160,4 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
     }
-
-
 }

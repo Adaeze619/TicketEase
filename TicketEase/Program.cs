@@ -5,6 +5,7 @@ using TicketEase.Configurations;
 using TicketEase.Domain.Entities;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
+using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +30,7 @@ builder.Services.AddMailService(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
