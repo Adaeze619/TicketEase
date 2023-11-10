@@ -246,4 +246,5 @@ paket-files/
 
 appsettings.json
 appsettings.Development.json
+appsettings.json
 TicketEase/*.txt

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Domain.Entities;
+﻿using TicketEase.Domain.Entities;
 
 namespace TicketEase.Application.DTO
 {
@@ -12,6 +7,6 @@ namespace TicketEase.Application.DTO
         public string Id { get; set; }
         public string Name { get; set;}
         public string Description { get; set; }
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<Domain.Entities.Project> projects { get; set; }
     }
 }
