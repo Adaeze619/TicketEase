@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Org.BouncyCastle.Asn1.Ocsp;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
@@ -38,7 +36,7 @@ namespace TicketEase.Application.ServicesImplementation
                 _unitOfWork.SaveChanges();
                 var responseDto = _mapper.Map<EditManagerDto>(manager);
                 _logger.LogInformation("Manager updated successfully");
-                return Task.FromResult(new ApiResponse<EditManagerDto>(true, $"Successfully added a Manager", 201, responseDto, new List<string>()));
+                return Task.FromResult(new ApiResponse<EditManagerDto>(true, $"Successfully updated a Manager", 201, responseDto, new List<string>()));
             }
             catch (Exception ex)
             {

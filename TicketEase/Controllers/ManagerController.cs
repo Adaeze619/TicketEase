@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
-using TicketEase.Domain.Entities;
 
 namespace TicketEase.Controllers
 {
@@ -21,7 +19,7 @@ namespace TicketEase.Controllers
             var response = _managerService.GetManagerById(id);
             return Ok(response);       
         }
-        [HttpGet("Edit")]
+        [HttpPut("Edit")]
         public IActionResult EditManager(string id, EditManagerDto managerDTO)
         {          
             var response = _managerService.EditManager(id, managerDTO);

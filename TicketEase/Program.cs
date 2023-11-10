@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Application.ServicesImplementation;
@@ -46,6 +47,10 @@ builder.Services.AddSwagger();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(Program));
+services.AddDbContext<TicketEaseDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+services.AddScoped<IManagerServices, ManagerServices>();
+
 
 var app = builder.Build();
 
