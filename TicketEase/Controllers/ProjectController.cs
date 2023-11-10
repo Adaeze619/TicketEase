@@ -27,7 +27,7 @@ namespace TicketEase.Controllers
         }
 
         [HttpDelete("DeleteProject")]
-        public IActionResult DeleteBoard(string boardId)
+        public IActionResult DeleteBoard()
         {
             return Ok(_projectServices.DeleteAllProjects());
         }

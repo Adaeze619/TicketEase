@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -114,12 +115,13 @@ namespace TicketEase.Application.ServicesImplementation
             {
                 List<Project> projects = _unitOfWork.ProjectRepository.GetProjects();
                 _unitOfWork.ProjectRepository.DeleteAllProject(projects);
-                response = new ApiResponse<ProjectReponseDto>(true, 200, "is successful");
+                response = new ApiResponse<ProjectReponseDto>(true, 200, "All Projects deleted successfully");
+                _unitOfWork.SaveChanges();
                 return response;
             }
             catch (Exception ex)
             {
-                response = new ApiResponse<ProjectReponseDto>(false, 500, "failed" + ex.InnerException);
+                response = new ApiResponse<ProjectReponseDto>(false, StatusCodes.Status400BadRequest, "failed" + ex.InnerException);
                 return response;
             }
         }

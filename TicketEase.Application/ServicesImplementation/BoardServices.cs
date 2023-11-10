@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Repositories;
@@ -92,12 +93,13 @@ namespace TicketEase.Application.ServicesImplementation
             {
                 List<Board> boards = _unitOfWork.BoardRepository.GetBoards();
                 _unitOfWork.BoardRepository.DeleteAllBoard(boards);
-                response = new ApiResponse<BoardResponseDto>(true, 200, "is successful");
+                response = new ApiResponse<BoardResponseDto>(true, 200, "All Boards deleted successfully");
+                _unitOfWork.SaveChanges();
                 return response;
             }
             catch (Exception ex)
             {
-                response = new ApiResponse<BoardResponseDto>(false, 500, "failed" + ex.InnerException);
+                response = new ApiResponse<BoardResponseDto>(false, StatusCodes.Status400BadRequest, "failed" + ex.InnerException);
                 return response;
             }
         }
