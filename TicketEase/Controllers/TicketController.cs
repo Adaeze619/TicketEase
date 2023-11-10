@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TicketEase.Application.DTO;
 using TicketEase.Application.Interfaces.Services;
 
 namespace TicketEase.Controllers
@@ -14,7 +15,30 @@ namespace TicketEase.Controllers
 			_ticketService = ticketService;
 		}
 
-		[HttpGet("user/{userId}")]
+        [HttpPost("add-ticket")]
+        public IActionResult AddTicket(string userId, string projectId, [FromBody] TicketRequestDto ticketRequestDTO)
+        {
+            var response = _ticketService.AddTicket(userId, projectId, ticketRequestDTO);
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+
+        [HttpPut("edit-ticket/{ticketId}")]
+        public IActionResult EditTicket(string ticketId, [FromBody] UpdateTicketRequestDto updatedTicketRequestDTO)
+        {
+            var response = _ticketService.EditTicket(ticketId, updatedTicketRequestDTO);
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpGet("user/{userId}")]
 		public async Task<IActionResult> GetTicketsByUserId(string userId, int page, int perPage)
 		{
 
