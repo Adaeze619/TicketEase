@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketEase.Persistence.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,6 +49,8 @@ namespace TicketEase.Persistence.Migrations
                     BusinessEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BusinessPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)

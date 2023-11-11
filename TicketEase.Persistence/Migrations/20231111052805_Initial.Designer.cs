@@ -12,8 +12,8 @@ using TicketEase.Persistence.Context;
 namespace TicketEase.Persistence.Migrations
 {
     [DbContext(typeof(TicketEaseDbContext))]
-    [Migration("20231110122949_initial")]
-    partial class initial
+    [Migration("20231111052805_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -344,6 +344,12 @@ namespace TicketEase.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyUsername")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")

@@ -31,7 +31,7 @@ namespace TicketEase.Application.ServicesImplementation
 		{
 			try
 			{  
-				var existingManager = _unitOfWork.ManagerRepository.FindManager(b => b.CompanyName == managerCreateDto.CompanyName && b.BusinessEmail == managerCreateDto.BusinessEmail).FirstOrDefault();
+				var existingManager = _unitOfWork.ManagerRepository.FindManager(b => b.BusinessEmail == managerCreateDto.BusinessEmail).FirstOrDefault();
 				if (existingManager != null)
 				{
 					return Task.FromResult(new ApiResponse<ManagerResponseDto>(false, 400, $"Manager already exists."));
@@ -39,19 +39,22 @@ namespace TicketEase.Application.ServicesImplementation
 
 				var manager = _mapper.Map<Manager>(managerCreateDto);
 				manager.CompanyUsername = managerCreateDto.BusinessEmail;
-				manager.CompanyPassword = PasswordGenerator.GeneratePassword(managerCreateDto.BusinessEmail, managerCreateDto.CompanyName);
+                string[] generatedPassword = PasswordGenerator.GeneratePassword(managerCreateDto.BusinessEmail, managerCreateDto.CompanyName);
+				manager.CompanyPassword = generatedPassword[1];
 				manager.CreatedDate = DateTime.Now;
+                manager.UpdatedDate = manager.CreatedDate;
 
-			    _unitOfWork.ManagerRepository.AddManager(manager);
+				_unitOfWork.ManagerRepository.AddManager(manager);
 				_unitOfWork.SaveChanges();
 
 				var responseDto = _mapper.Map<ManagerResponseDto>(manager);
+                responseDto.CompanyPassword = generatedPassword[0];
 				return Task.FromResult(new ApiResponse<ManagerResponseDto>(true, "Manager successfully added", 201, responseDto, new List<string>()));
 
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Error occurred while adding a board");
+				_logger.LogError(ex, "Error occurred while adding a board "+ ex.InnerException);
 				var errorList = new List<string>();
 				errorList.Add(ex.Message);
 				return Task.FromResult(new ApiResponse<ManagerResponseDto>(false, $"Error occurred while adding manager.{ex.InnerException}", 500, new List<string>()));

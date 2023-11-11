@@ -6,6 +6,7 @@ namespace TicketEase.Domain.Entities
     public class Manager
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string CompanyName { get; set; }
         public string BusinessEmail { get; set; }
