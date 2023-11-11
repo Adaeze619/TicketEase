@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Serilog;
 using TicketEase.Application.DTO;
+using TicketEase.Application.DTO.Manager;
 using TicketEase.Application.Interfaces.Repositories;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Common.Utilities;
@@ -24,7 +26,40 @@ namespace TicketEase.Application.ServicesImplementation
             _logger = logger;
           _emailServices = emailServices;
         }
-        public Task<ApiResponse<EditManagerDto>> EditManager(string userId, EditManagerDto editManagerDto)
+
+		public  Task<ApiResponse<ManagerResponseDto>> CreateManager(ManagerInfoCreateDto managerCreateDto)
+		{
+			try
+			{  
+				var existingManager = _unitOfWork.ManagerRepository.FindManager(b => b.CompanyName == managerCreateDto.CompanyName && b.BusinessEmail == managerCreateDto.BusinessEmail).FirstOrDefault();
+				if (existingManager != null)
+				{
+					return Task.FromResult(new ApiResponse<ManagerResponseDto>(false, 400, $"Manager already exists."));
+				}
+
+				var manager = _mapper.Map<Manager>(managerCreateDto);
+				manager.CompanyUsername = managerCreateDto.BusinessEmail;
+				manager.CompanyPassword = PasswordGenerator.GeneratePassword(managerCreateDto.BusinessEmail, managerCreateDto.CompanyName);
+				manager.CreatedDate = DateTime.Now;
+
+			    _unitOfWork.ManagerRepository.AddManager(manager);
+				_unitOfWork.SaveChanges();
+
+				var responseDto = _mapper.Map<ManagerResponseDto>(manager);
+				return Task.FromResult(new ApiResponse<ManagerResponseDto>(true, "Manager successfully added", 201, responseDto, new List<string>()));
+
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error occurred while adding a board");
+				var errorList = new List<string>();
+				errorList.Add(ex.Message);
+				return Task.FromResult(new ApiResponse<ManagerResponseDto>(false, $"Error occurred while adding manager.{ex.InnerException}", 500, new List<string>()));
+
+			}
+		}
+	
+		public Task<ApiResponse<EditManagerDto>> EditManager(string userId, EditManagerDto editManagerDto)
         {
             try
             {

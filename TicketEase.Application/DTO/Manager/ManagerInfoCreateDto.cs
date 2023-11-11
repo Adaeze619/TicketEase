@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketEase.Application.DTO
+namespace TicketEase.Application.DTO.Manager
 {
     public class ManagerInfoCreateDto
     {

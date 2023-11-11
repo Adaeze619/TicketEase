@@ -1,6 +1,5 @@
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
@@ -8,7 +7,6 @@ using TicketEase.Domain.Entities;
 using TicketEase.Mapper;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Extensions;
-using TicketEase.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

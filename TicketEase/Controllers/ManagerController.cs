@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TicketEase.Application.DTO;
+using TicketEase.Application.DTO.Manager;
 using TicketEase.Application.Interfaces.Services;
 using TicketEase.Domain;
 
@@ -14,6 +15,14 @@ namespace TicketEase.Controllers
         {
             _managerService = managerService;
         }
+
+        [HttpPost("AddManager")]
+        public IActionResult CreateManager([FromBody] ManagerInfoCreateDto managerInfoCreateDto)
+        {
+            return Ok(_managerService.CreateManager(managerInfoCreateDto));
+        }
+
+
         [HttpGet("GetById")]
         public IActionResult GetManagersById(string id)
         {

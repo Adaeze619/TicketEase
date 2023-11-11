@@ -34,14 +34,14 @@ namespace TicketEase.Persistence.Repositories
 
         public IUserRepository UserRepository { get; private set; }
 
-        public void Dispose()
-        {
-            _ticketEaseDbContext.Dispose();
-        }
-
-		public int SaveChanges()
+        public int SaveChanges()
 		{
 			return _ticketEaseDbContext.SaveChanges();
+		}
+
+		public void Dispose()
+		{
+			_ticketEaseDbContext.Dispose();
 		}
 	}
 
