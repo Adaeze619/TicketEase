@@ -11,6 +11,6 @@ namespace TicketEase.Application.Interfaces.Services
         Task<ApiResponse<ProjectReponseDto>> UpdateProjectAsync(string boardId, string projectId, UpdateProjectRequestDto projectUpdate);
         Task<ApiResponse<Project>> GetProjectByIdAsync(string projectId);
         Task<ApiResponse<PageResult<IEnumerable<Project>>>> GetProjectsByBoardIdAsync(string boardId, int perPage, int page);
-        ApiResponse<ProjectReponseDto> DeleteAllProjects();
+        ApiResponse<string> DeleteAllProjects();
     }
 }

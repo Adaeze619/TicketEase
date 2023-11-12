@@ -142,20 +142,20 @@ namespace TicketEase.Application.ServicesImplementation
                 return ApiResponse<PageResult<IEnumerable<Project>>>.Failed(false, "Error occured whiile loading projects", 500, new List<string> {ex.Message});
             }
         }
-        public ApiResponse<ProjectReponseDto> DeleteAllProjects()
+        public ApiResponse<string> DeleteAllProjects()
         {
-            ApiResponse<ProjectReponseDto> response;
+            ApiResponse<string> response;
             try
             {
                 List<Project> projects = _unitOfWork.ProjectRepository.GetProjects();
-                _unitOfWork.ProjectRepository.DeleteAllProject(projects);
-                response = new ApiResponse<ProjectReponseDto>(true, StatusCodes.Status200OK, "All Projects deleted successfully");
+                _unitOfWork.ProjectRepository.DeleteAllProjects(projects);
+                response = new ApiResponse<string>("All Projects deleted successfully");
                 _unitOfWork.SaveChanges();
                 return response;
             }
             catch (Exception ex)
             {
-                response = new ApiResponse<ProjectReponseDto>(false, StatusCodes.Status400BadRequest, "failed" + ex.InnerException);
+                response = new ApiResponse<string>(false, StatusCodes.Status400BadRequest, "failed" + ex.InnerException);
                 return response;
             }
         }

@@ -8,7 +8,7 @@ namespace TicketEase.Application.Interfaces.Repositories
         List<Board> GetBoards();
         void AddBoard(Board board);
         void DeleteBoard(Board board);
-        void DeleteAllBoard(List<Board> boards);
+        void DeleteAllBoards(List<Board> boards);
         public List<Board> FindBoard(Expression<Func<Board, bool>> condition);
         Board GetBoardById(string id);
         void UpdateBoard(Board board);

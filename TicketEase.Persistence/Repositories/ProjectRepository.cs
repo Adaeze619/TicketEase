@@ -32,7 +32,7 @@ namespace TicketEase.Persistence.Repositories
 
 		public void UpdateProject(Project project) => Update(project);
 
-        public void DeleteAllProject(List<Project> projects)
+        public void DeleteAllProjects(List<Project> projects)
         {
             DeleteAll(projects);
         }

@@ -144,7 +144,7 @@ namespace TicketEase.Application.ServicesImplementation
             try
             {
                 List<Board> boards = _unitOfWork.BoardRepository.GetBoards();
-                _unitOfWork.BoardRepository.DeleteAllBoard(boards);
+                _unitOfWork.BoardRepository.DeleteAllBoards(boards);
                 response = new ApiResponse<BoardResponseDto>(true, StatusCodes.Status200OK, "All Boards deleted successfully");
                 _unitOfWork.SaveChanges();
                 return response;
