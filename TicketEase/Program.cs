@@ -1,13 +1,7 @@
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Application.Interfaces.Services;
-using TicketEase.Application.ServicesImplementation;
-using Microsoft.EntityFrameworkCore;
-using Serilog.Core;
-using TicketEase.Application.Interfaces.Repositories;
-using TicketEase.Application.Interfaces.Services;
-using TicketEase.Application.ServicesImplementation;
+using Microsoft.Extensions.Options;
 using TicketEase.Common.Utilities;
 using TicketEase.Configurations;
 using TicketEase.Domain.Entities;
@@ -24,56 +18,41 @@ var configuration = builder.Configuration;
 var services = builder.Services;
 var env = builder.Environment;
 
-
-//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddScoped<IBoardServices, BoardServices>();
-//builder.Services.AddScoped<ITicketService, TicketService>();
-//builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-//builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-//builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-
-
-// Authentication configuration
-builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString"))
-);
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IBoardServices, BoardServices>();
-builder.Services.AddScoped<ITicketService, TicketService>();
-//builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-
-builder.Services.AddAutoMapper(typeof(Program));
-
-builder.Services.AddAutoMapper(typeof(MapperProfile));
-
+// Add services to the container.
+builder.Services.AddDependencies(builder.Configuration);
 builder.Services.AddAuthentication();
 builder.Services.AuthenticationConfiguration(configuration);
-builder.Services.AddAutoMapper(typeof(Program));
 
 // Identity  configuration
 builder.Services.IdentityConfiguration();
 builder.Services.AddLoggingConfiguration(builder.Configuration);
-//builder.Services.AddTransient<Seeder>();
 
+builder.Services.AddSingleton(provider =>
+{
+    var cloudinarySettings = provider.GetRequiredService<IOptions<CloudinarySetting>>().Value;
+
+    Account cloudinaryAccount = new Account(
+        cloudinarySettings.CloudName,
+        cloudinarySettings.APIKey,
+        cloudinarySettings.APISecret);
+
+    return new Cloudinary(cloudinaryAccount);
+});
+builder.Services.AddMailService(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<TicketEaseDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionStrings")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TicketEaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+//builder.Services.AddDbContext<TicketEaseDbContext>(options => 
+//options.UseSqlServer(builder.Configuration.GetConnectionString("TicketConnectionString")));
 builder.Services.AddSwagger();
-
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-			   .AddEntityFrameworkStores<TicketEaseDbContext>()
-			   .AddDefaultTokenProviders();
-//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddDependencies(configuration);
+               .AddEntityFrameworkStores<TicketEaseDbContext>()
+               .AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 
@@ -87,9 +66,10 @@ if (app.Environment.IsDevelopment())
 }
 using (var scope = app.Services.CreateScope())
 {
-	var serviceprovider = scope.ServiceProvider;
-	Seeder.SeedRolesAndSuperAdmin(serviceprovider);
+    var serviceprovider = scope.ServiceProvider;
+    Seeder.SeedRolesAndSuperAdmin(serviceprovider);
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -97,4 +77,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

@@ -8,7 +8,7 @@ namespace TicketEase.Persistence.Repositories
 {
 	public class UserRepository : GenericRepository<AppUser>, IUserRepository
 	{
-		public UserRepository(TicketEaseDbContext ticketEaseDbContext) : base(ticketEaseDbContext) { }
+		public UserRepository(TicketEaseDbContext ticketEaseDbContext): base(ticketEaseDbContext) { }
 
 		public void AddUser(AppUser appUser) => Add(appUser);
 
@@ -29,6 +29,16 @@ namespace TicketEase.Persistence.Repositories
 			return GetById(id);
 		}
 
-		public void UpdateUser(AppUser appUser) => Update(appUser);
+        public void UpdatePhoto(string id, string imageUrl)
+        {
+            var foundUser = GetById(id);
+            if (foundUser!= null)
+            {
+				foundUser.ImageUrl = imageUrl;
+				UpdateUser(foundUser);
+			}
+        }
+
+        public void UpdateUser(AppUser appUser) => Update(appUser);
 	}
 }

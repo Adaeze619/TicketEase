@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using TicketEase.Application.DTO;
+using TicketEase.Application.DTO.Project;
+using TicketEase.Common.Utilities;
+using TicketEase.Domain;
 
 namespace TicketEase.Application.Interfaces.Services
 {
-    internal interface IUserServices
+    public interface IUserServices
     {
+        Task<ApiResponse<AppUserDto>> GetUserByIdAsync(string userId);
+        Task<ApiResponse<PageResult<IEnumerable<AppUserDto>>>> GetUsersByPaginationAsync(int page, int perPage);
+        Task<string> UpdateUserPhotoByUserId(string id, UpdatePhotoDTO model);
+        Task<ApiResponse<bool>> UpdateUserAsync(string userId, UpdateUserDto updateUserDto);
     }
 }
