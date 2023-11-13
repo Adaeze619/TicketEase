@@ -14,21 +14,21 @@ namespace TicketEase.Application.ServicesImplementation
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IUrlHelper _urlHelper;
+      //  private readonly IHttpContextAccessor _httpContextAccessor;
+       // private readonly IUrlHelper _urlHelper;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly EmailServices _emailServices;
         private readonly ILogger _logger;
 
-        public AuthenticationService(IHttpContextAccessor httpContextAccessor, IUrlHelper urlHelper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<EmailSettings> emailSettings, ILogger<AuthenticationService> logger)
+        public AuthenticationService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<EmailSettings> emailSettings, ILogger<AuthenticationService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailServices = new EmailServices(emailSettings);
             _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
-            _urlHelper = urlHelper;
+           // _httpContextAccessor = httpContextAccessor;
+          //  _urlHelper = urlHelper;
         }
 
 
@@ -50,7 +50,7 @@ namespace TicketEase.Application.ServicesImplementation
                     var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     // Get the confirmation link
-                    var confirmationLink = GenerateConfirmationLink(user, emailConfirmationToken);
+                   // var confirmationLink = GenerateConfirmationLink(user, emailConfirmationToken);
 
                     // Customize your email body here
                     var mailRequest = new MailRequest
@@ -60,8 +60,8 @@ namespace TicketEase.Application.ServicesImplementation
                         Body = $"Dear {user.UserName},<br><br>" +
                                 $"Thank you for registering with our website. Your new credentials are as follows:<br>" +
                                 $"Email: {customizedEmail}<br>" + // Use the customized email in the email body
-                                $"Password: {password}<br>" +
-                                $"Please confirm your email by clicking the link: {confirmationLink}"
+                                $"Password: {password}<br>" 
+                             //   $"Please confirm your email by clicking the link: {confirmationLink}"
                     };
 
                     // Use your email service or library to send the email
@@ -114,10 +114,10 @@ namespace TicketEase.Application.ServicesImplementation
 
 
         // Construct confirmation link
-        private string GenerateConfirmationLink(AppUser user, string emailConfirmationToken)
-        {
-            return _urlHelper.Action("ConfirmEmailAsync", "Account", new { email = user.Email, token = emailConfirmationToken }, protocol: _httpContextAccessor.HttpContext.Request.Scheme);
-        }
+        //private string GenerateConfirmationLink(AppUser user, string emailConfirmationToken)
+        //{
+        //    return _urlHelper.Action("ConfirmEmailAsync", "Account", new { email = user.Email, token = emailConfirmationToken }, protocol: _httpContextAccessor.HttpContext.Request.Scheme);
+        //}
 
 
 

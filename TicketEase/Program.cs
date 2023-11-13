@@ -1,5 +1,7 @@
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TicketEase.Common.Utilities;
@@ -39,6 +41,7 @@ builder.Services.AddSingleton(provider =>
     return new Cloudinary(cloudinaryAccount);
 });
 builder.Services.AddMailService(builder.Configuration);
+//builder.Services.AddScoped<IUrlHelper, UrlHelper>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

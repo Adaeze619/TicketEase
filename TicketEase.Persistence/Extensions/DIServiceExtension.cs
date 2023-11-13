@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TicketEase.Application.Interfaces.Repositories;
@@ -7,6 +9,8 @@ using TicketEase.Application.ServicesImplementation;
 using TicketEase.Domain.Entities;
 using TicketEase.Persistence.Context;
 using TicketEase.Persistence.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace TicketEase.Persistence.Extensions
 {
@@ -36,6 +40,9 @@ namespace TicketEase.Persistence.Extensions
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IEmailServices, EmailServices>();
+           
+          
+           
             services.AddDbContext<TicketEaseDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString("TicketConnectionString")));
             services.AddScoped<IManagerServices, ManagerServices>();
